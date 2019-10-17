@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8"/>
+	<title>信息展示</title>
+	<link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../../../static/css/style.css">
+	<link rel="stylesheet" href="../../../static/css/html.css">
+	<!-- 时间选择器样式 -->
+	<link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css">
+	<script src="../../../static/js/echarts.min.js"></script>
+	<style>
+		.topCheckbox {
+		    float: left;
+		    margin: 15px 0 0 25px;
+		}
+		
+		.checkboxLabel {
+		    padding-top: 3px;
+		}
+		
+		.right {
+		    position: relative;
+		    width: 86%;
+		}
+		
+		#right {
+		    position: absolute;
+		    right: 5px;
+		    width: 18%;
+		    margin: -100px auto;
+		    padding: 15px;
+		    border: 1px #1E7ACE solid;
+		}
+		
+		.container {
+		    float: left;
+		    width: 79%;
+		}
+		
+		#container1 {
+		    width: 77%;
+		}
+		#container2 {
+		    width: 100%;
+		    overflow: auto;
+		}
+		
+		#dataTable {
+		    min-width: 100%;
+		}
+		
+		#dataTable th {
+		    min-width: 123px;
+		}
+		#box1{
+			width: 78%;·
+			height: 150px;
+		}
+		.div-style{
+		    width: 100%;
+		    height: 170px;
+		    background-color: #f3f3f4;
+		    border-radius:5px;
+			box-shadow:2px 2px 10px #999;
+			padding:10px;
+			
+		}
+		.div-style tr td{
+		    font-size: 15px;
+		    width: 35%;
+		    height:40px;
+		    text-align: center;
+		    border-bottom:1px solid #fff;
+		}
+		.btn{
+		    font-size: 13px !important;
+		    background-color: #B0C4DE;
+		    color: #fff;
+		}
+		.main{
+			width:100%;
+			height:250px;
+			background-color: #f3f3f4;
+		    border-radius:5px;
+			box-shadow:2px 2px 10px #999;
+			display:none;
+		}
+		h5{
+			text-align:center;
+		}
+		.td-width{
+			width:12%;
+			text-align:center;
+		}
+		.btn-w{
+			width:60px;
+		}
+		.btn-outline-secondary{
+			border-color:#B0C4DE;
+		}
+		.td-p{
+			padding-left:10px;
+		}
+		#d1{
+			color:red;
+			padding-left:25px;
+		}
+		
+	</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="right container m-5 ">
+			<h5>信息设备查询</h5>
+			<table class="m-4">
+				<tr>
+				 <td class="td-width">开始时间<span class="publicRed"></span></td>
+				 <td>
+				 	<div class="input-group input-group-sm date ">
+                         <input id="time1" class="form-control form_datetime removeC1"
+                             size="40" type="text" value="" readonly>
+                         <div class="input-group-append">
+                             <button class="btn btn-outline-secondary input-group-addon removeC1" type="button">
+                                 <span class="fa  fa-calendar-times-o"></span>
+                             </button>
+                         </div>
+                   </div>
+				 </td>
+				 <td class="td-width">结束时间</td>
+				 <td>
+				 	<div class="input-group input-group-sm date">
+                        <input id="time2" class="form-control form_datetime removeC2"
+                            size="40" type="text" value="" readonly>
+                        <div class="input-group-append">
+                            <button
+                                class="btn btn-outline-secondary input-group-addon removeC2"
+                                type="button"> 
+                                <span class="fa  fa-calendar-times-o"></span>
+                            </button>
+                        </div>
+                    </div>
+				 </td>
+				 <td class="td-p">
+				 	<input type="button" id="select" class="btn btn-w btn-sm" onclick="search1()" value="查询">
+				 </td>
+				</tr>
+				<tr><td id="d1" colspan="5"></td></tr>
+			</table>
+			<!-- 信息展示 -->
+            <div class="div-style m-2 mt-4">
+                <table class="table-padding" id="table-style">
+                	<tr></tr>
+                    <tr>
+                        <td colspan="4">信息展示</td>
+                    </tr>
+                    <tr>
+                        <td>投加运行频率
+                            <button class="ml-4 btn btn1" id="yxpl" >查看统计表</button>
+                        </td>
+                        <td>电解槽温度值
+                        	<button class="ml-4 btn btn2" id="wd" >查看统计表</button>
+                        </td>
+                        <td>余氯值
+                        	<button class="ml-4 btn btn3" id="ylz" >查看统计表</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>电解累计分钟
+                        	<button class="ml-4 btn btn4" id="djlj" >查看统计表</button>
+                        </td>
+                        <td>电解电压实际值
+                        	<button class="ml-2 btn btn5" id="djdysjz" >查看统计表</button>
+                        </td>
+                        <td>流量值
+                        	<button class="ml-4 btn btn6" id="llz" >查看统计表</button>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+           
+			<div id="div-yxpl" class="m-2 mt-4 main"></div>
+			<div id="div-wd" class="m-2 mt-4 main"></div>
+			<div id="div-djlj" class="m-2 mt-4 main"></div>
+			<div id="div-djdysjz" class="m-2 mt-4 main"></div>
+			<div id="div-ylz" class="m-2 mt-4 main"></div>
+			<div id="div-llz" class="m-2 mt-4 main"></div>
+    </div>
+    </div>
+    <div th:replace="fragment/public :: #public_footer"></div>
+    <!-- 调用展示图表函数 -->
+    <script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../../static/js/echarts.min.js"></script>
+	<script src="../../../static/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript" src="../../../static/js/bootstrap-datetimepicker.min.js"  charset="UTF-8"></script>
+	<script type="text/javascript" src="../../../static/js/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
+	<script type="text/javascript">
+	$('.form_datetime').datetimepicker({
+    	bootcssVer : 3,
+        format : 'yyyy-mm-dd',
+        //minView: "month",
+        //语言选择中文
+        language : 'zh-CN',
+        //weekStart — 一周从哪一天开始
+        weekStart : 1,
+        //最多显示时间，天。默认小时为0
+        minView : 2,
+        todayBtn : 1,//关闭选择今天按钮
+        //autoclose — 选完时间后是否自动关闭
+        autoclose : 1,
+        //— 当天日期高亮
+        todayHighlight : 1,
+        startView : 2,//打开弹出框时，显示到什么格式,3代表月
+        //当选择器关闭的时候，是否强制解析输入框中的值。
+        //也就是说，当用户在输入框中输入了不正确的日期，
+        //选择器将会尽量解析输入的值，并将解析后的正确值按照给定的格式format设置到输入框中。
+        forceParse : 0,
+        //展示上午下午
+        showMeridian : 1
+    });
+    $(".removeC1").click(function() {
+        $('#time1').val("");
+    });
+    $(".removeC2").click(function(){
+        $('#time2').val("");
+    });
+       $("#sbsbm").change(function(){
+           search1();
+        });
+	
+       function search1() {
+     	   $.ajax({
+    		    "url" : "if_time",
+    		    "data" : {
+    		        "time1" : function() {
+    		            var time1 = $('#time1').val();
+    		            return time1;
+            				},
+    		       "time2" : function() {
+    		           var time2 = $('#time2').val();
+    		           return time2;
+    		      			 },
+       					 },
+    		    "type" : "GET",
+    		    "dataType" : "text",
+    		    "success" : function(data) {
+    		        if (data == "") {
+    		            document.getElementById("d1").innerHTML = "";
+    		           
+    		        } else {
+    		            document.getElementById("d1").innerHTML = data ;
+    		        }
+    
+    		    }
+    		});
+        };
+        
+          $("#table-style").on('click', function(e){
+          	var el = $(e.target);
+             if( el.attr('id') === 'yxpl' ){
+                //显示你的div的操作
+                $('#div-yxpl').toggle();
+               show("data1");
+            }else if( el.attr('id') === 'wd' ){
+                //隐藏你的div的操作
+            	$('#div-wd').toggle();
+            	show("data2");
+            }else if( el.attr('id') === 'ylz' ){
+                //隐藏你的div的操作
+            	$('#div-ylz').toggle();
+            	show("data3");
+            }else if( el.attr('id') === 'djlj' ){
+                //隐藏你的div的操作
+            	$('#div-djlj').toggle();
+                show("data4")
+            }else if( el.attr('id') === 'djdysjz' ){
+                //隐藏你的div的操作
+            	$('#div-djdysjz').toggle();
+                show("data5")
+            }else if( el.attr('id') === 'llz' ){
+                //隐藏你的div的操作
+            	$('#div-llz').toggle();
+            	show("data6");
+            } 
+         }) 
+    
+         
+     function show(obj){
+    	 $.ajax({
+             "url" :"/getdata/if_dataCS",
+             
+             "data" : {
+                 "time1" : $('#time1').val(),
+                 "time2" : $('#time2').val(),
+                 "pfName" : obj
+             	},
+             "type" : "POST",
+             "dataType" : "json",
+             "success" : function(data) {
+            	 if("data1"==obj){
+            		 chart("div-yxpl","投加运行频率","{value} Hz",data);
+            	 };
+            	 if("data2"==obj){
+            		 chart("div-wd","电解槽温度值","{value} ℃",data);
+            	 };
+            	 if("data4"==obj){
+            		 chart("div-djlj","电解累计分钟","{value} 分钟",data);
+            	 };
+            	 if("data5"==obj){
+            		 chart("div-djdysjz","电解电压实际值","{value} V",data);
+            	 };
+            	 if("data3"==obj){
+            		 chart("div-ylz","余氯值","{value} ppm",data); 
+            	 };
+            	 if("data6"==obj){
+            		 chart("div-llz","流量值","{value} m³/h",data);
+            	 };
+          	
+              }
+         });
+     }  
+          function chart(id,title,axislabel,data){
+     	   	 var myChart = echarts.init(document.getElementById(id));
+     			    option = {
+     			    	title:{
+     			    		text:title
+     			    	},
+     			         legend: {}, 
+     			        tooltip: {
+     			             trigger: 'axis', 
+     			        },
+     			        dataset: {
+	     			        	source:[
+	     			        		data.time,
+	     			                data.pf0,data.pf1,data.pf2
+	     			        	]	
+     			        },
+     			        xAxis: {
+     			        	type: 'category',
+     			        	axisLabel:{
+     			        		show:true,
+     			        		fontSize:'10',
+     			        	},
+     			        },
+     			        yAxis:{
+     			        	gridIndex: 0,
+     			        	axisLabel:{
+     			        		formatter:axislabel
+     			        	}
+     			   		 },
+     			        series:[
+     			            {type: 'line', name:'一号',smooth: true, seriesLayoutBy: 'row'},
+     			           	{type: 'line', name:'二号', smooth: true, seriesLayoutBy: 'row'},
+     			            {type: 'line', name:'三号',smooth: true, seriesLayoutBy: 'row'}
+     			        ]
+     			    };
+     			    myChart.setOption(option);
+     			   $(window).resize(function(){
+     	                myChart.resize();    
+     	             });
+     }
+ 	 
+          $("#select").on('click', function(){
+          	if($("#div-yxpl").is(':visible')){
+  					show("data1");
+  				};
+  				if($("#div-wd").is(':visible')){
+  					show("data2");
+  				};
+  				if($("#div-djlj").is(':visible')){
+  					show("data4");
+  				};
+				 if($("#div-djdysjz").is(':visible')){
+  					show("data5");
+  				};
+				 if($("#div-ylz").is(':visible')){
+  					show("data3"); 
+  				};
+  				if($("#div-llz").is(':visible')){
+  					show("data6");
+  				} ;
+          })
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加客户信息</title>
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/font-awesome-4.7.0/css/font-awesome.min.css">
+<!-- 时间选择器样式 -->
+<link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../../../static/css/html.css">
+
+<style>
+#formwrapper {
+	width: 450px;
+	margin: 15px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px #1E7ACE solid;
+}
+
+fieldset {
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+fieldset legend {
+	color: #1E7ACE;
+	font-weight: bold;
+	padding: 3px 20px 3px 20px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+.enter {
+	text-align: center;
+}
+
+.alert alert-warning {
+	float: right;
+}
+</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="publicRight">
+			<div>
+				<nav class="breadcrumb">
+					<a class="breadcrumb-item">基础信息</a> <a class="breadcrumb-item">客户信息管理</a>
+					<a class="breadcrumb-item">客户新增</a>
+				</nav>
+			</div>
+			<div id="formwrapper">
+				<!-- 修改样式 在CSS里定义 -->
+				<form id="formins">
+					<fieldset>
+						<legend>添加客户信息(*为必填项)</legend>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">*客户编码</span>
+							</div>
+							<input type="text" class="form-control" id="customernum"
+								name="customernum" maxlength="20" onblur="customernum_uq_unnull()">
+						</div>
+						<div class="alert alert-warning" id="customernumAlert"
+							style="display: none">
+							<strong>提示！</strong>此用户名被占用或此选项为空。
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">*客户名称</span>
+							</div>
+							<input class="form-control" type="text" id="customername"
+								name="customername" maxlength="10" onblur="customername_onblurnull()">
+						</div>
+						<div class="alert alert-warning" id="customernameAlert"
+							style="display: none">
+							<strong>提示！</strong>此选项不能为空。
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">请选择省份</span>
+							</div>
+							<select id="province" name="province" onchange="getCity(this)"
+								class="form-control">
+								<option></option>
+							</select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">请选择城市</span>
+							</div>
+							<select id="city" name="city" class="form-control"></select>
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">联系人</span>
+							</div>
+							<input id="linkman" type="text" name="linkman"
+								maxlength="100" class="form-control">
+						</div>
+
+						<div class="input-group  mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">性别</span>
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input id="sexMan" name="sex" type="radio" value="男"
+									checked="checked" /><label for="sexMan">男</label>
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input id="sexWoman" name="sex" type="radio" value="女" /><label
+									for="sexWoman">女</label>
+							</div>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">地址</span>
+							</div>
+							<input class="form-control" id="address" type="text"
+								name="address" maxlength="100">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">类别</span>
+							</div>
+							<input class="form-control" id="category" type="text"
+								name="category" maxlength="20">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">联系电话</span>
+							</div>
+							<input class="form-control" id="tel" type="text" name="tel"
+								oninput="value=value.replace(/[^\d]/g,'')" maxlength="11">
+						</div>
+						<div class="input-group  date ">
+							<div class="input-group-prepend">
+								<span class="input-group-text">登记日期</span>
+							</div>
+							<input id="recorddate" name="recorddate"
+								class="form_datetime removeC form-control" size="40"
+								type="text" value="" readonly>
+							<div class="input-group-append">
+								<button
+									class="btn btn-outline-secondary input-group-addon removeC"
+									type="button">
+								<span class="fa  fa-calendar-times-o"></span>
+								</button>
+							</div>
+						</div>
+						<br>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">备注信息</span>
+							</div>
+							<textarea class="form-control" name="note" id="note" cols="25"
+								rows="3" placeholder="请输入备注信息..."
+								maxlength="100" style="resize: none"></textarea>
+						</div>
+						<br>
+						<div class="enter">
+							<input class="btn btn-primary btn-sm" type="button" onclick="ins()"
+								value="保存">&nbsp;&nbsp; <input
+								class="btn btn-primary btn-sm" type="button" name="Submit"
+								onclick="javascript:history.back(-1);" value="返回">
+						</div>
+
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragment/public :: #public_footer"></div>
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script src="../../../static/js/dataTables.bootstrap4.min.js"></script>
+	<script type="text/javascript"
+		src="../../../static/js/bootstrap-datetimepicker.min.js"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="../../../static/js/bootstrap-datetimepicker.zh-CN.js"
+		charset="UTF-8"></script>
+	<script src="../../../static/js/cityArray.js"></script>
+	<script src="../../../static/js/cityMethod.js"></script>
+	<script type="text/javascript">
+		function ins(){
+			if(submit_check()== true){
+				let form = $("#formins").serialize();
+				 $.ajax({
+					"url" : "/customer/insert",
+					"type" : "POST",
+					"data" : form,
+					"dataType" : "json",
+					"success" : function(data) {
+						alert(data.status);
+						history.back();
+					},
+					"error" : function(data) {
+						alert("连接出错");
+					}
+				});
+			};
+			
+		}
+		// 唯一非空
+		function customernum_uq_unnull() {
+			var r = "false";
+			var customernum = $("#customernum").val();
+			var length = customernum.length;
+			if (length == null || length == "" || length == undefined) {
+				$("#customernumAlert").show();
+				return "false";
+			} else {
+				$("#customernumAlert").hide();
+				r = "true";
+			}
+
+			$.ajax({
+				"async" : false,
+				"url" : "/customer/selectByCustomernum",
+				"data" : {
+					"customernum" : customernum
+				},
+				"type" : "get",
+				"dataType" : "json",
+				"success" : function(data) {
+
+					if (data.status == "200") {
+						$("#customernumAlert").show();
+						r = "false";
+					}
+					if (data.status == "400") {
+						$("#customernumAlert").hide();
+						r = "true";
+					}
+				},
+				"error" : function() {
+					alert("请求失败");
+					r = "false";
+				}
+			});
+			return r;
+		}
+
+		//限制字符非空
+		function customername_onblurnull() {
+			var ustomername = $("#customername").val();
+			var length = ustomername.length;
+			if (length == null || length == "" || length == undefined) {
+				$("#customernameAlert").show();
+				return "false";
+			} else {
+				$("#customernameAlert").hide();
+				return "true";
+			}
+		}
+
+		function submit_check() {
+			var r = false;
+			customernum_uq_unnull();
+			customername_onblurnull();
+
+			if (customernum_uq_unnull() == "true"
+					&& customername_onblurnull() == "true") {
+				r = true;
+			}
+			return r;
+		}
+		$('.form_datetime').datetimepicker({
+			bootcssVer : 3,
+			format : 'yyyy-mm-dd',
+			
+			//语言选择中文
+			language : 'zh-CN',
+			//weekStart — 一周从哪一天开始
+			weekStart : 1,
+			//最多显示时间，天。默认小时为0
+			minView : 2,
+			todayBtn : 1,//关闭选择今天按钮
+			//autoclose — 选完时间后是否自动关闭
+			autoclose : 1,
+			//— 当天日期高亮
+			todayHighlight : 1,
+			startView : 2,//打开弹出框时，显示到什么格式,3代表月
+			//当选择器关闭的时候，是否强制解析输入框中的值。
+			//也就是说，当用户在输入框中输入了不正确的日期，
+			//选择器将会尽量解析输入的值，并将解析后的正确值按照给定的格式format设置到输入框中。
+			forceParse : 0,
+			//展示上午下午
+			showMeridian : 1
+		});
+		$(".removeC").click(function() {
+			$('.form_datetime').val("");
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<meta charset="UTF-8">
+<title>模板</title>
+
+<body>
+	<!-- 公共头部 -->
+	<div class="publicHeader row" id="public_header">
+		<div class="col-sm-3">
+			<img src="../../../static/images/logo.jpg">
+		</div>
+		<div class="col-sm-6">
+			<h1>济南欧瑞水处理（WTD）数据管理系统</h1>
+		</div>
+		<div class="user col-sm-3">
+			<h6>
+				<a href="/loginout">退出</a>&nbsp;
+				<a href="" data-toggle="modal" data-target="#passModal" onclick="getActiveUser()">修改密码</a>
+				<a href="#" id="public_namefirst"></a>&nbsp;
+				<a href="../indexHtml">首页</a>&nbsp;  
+			</h6>
+		</div>
+		
+		
+		<!-- 模态框 -->
+		<div class="modal fade" id="passModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- 模态框头部 -->
+					<div class="modal-header">
+						<h4 class="modal-title">
+							<a id="public_name"></a>
+							<a id="public_usernum"></a>
+						</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- 模态框主体 -->
+					<div class="modal-body">
+						<form>
+			
+								<div class="form-group form-inline">
+									<label for="oldpass">旧密码</label>&nbsp;&nbsp;&nbsp;&nbsp;<input
+										type="password" class="form-control" id="oldpass"
+										name="oldpass" onclick="" />
+								</div>
+								<div>
+									<hr width="100%" size=1>
+								</div>
+								<div class="form-group form-inline">
+									<label for="newpass">新密码</label>&nbsp;&nbsp;&nbsp;&nbsp;<input
+										type="password" class="form-control" id="newpass"
+										name="newpass" />
+								</div>
+
+								<div class="form-group form-inline">
+									<label for="confirmpass">确认密码</label> <input type="password"
+										class="form-control" id="confirmpass" name="confirmpass" />
+								</div>
+								<div class="alert alert-warning" id="passNullAlert"
+									style="display: none">
+									<strong>提示！</strong>密码不能为空
+								</div>
+								<div class="alert alert-warning" id="passDifferenceAlert"
+									style="display: none">
+									<strong>提示！</strong>两次密码不一致
+								</div>
+								<div class="alert alert-warning" id="passErrorAlert"
+									style="display: none">
+									<strong>提示！</strong>旧密码不正确
+								</div>
+
+
+						
+						</form>
+					</div>
+
+					<!-- 模态框底部 -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">关闭</button>
+						<button type="button" class="btn btn-primary" onclick="update_check()">保存更改</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+	<!-- 系统时间，温馨提示 -->
+	<div class="publicTime" id="public_time">
+		选择设备识别码：<select id="sbsbm"  onchange="show_sbsbm(this)"></select>&nbsp;&nbsp;&nbsp;&nbsp;<span id="time">正在获取系统时间...</span> <a>温馨提示：该系统仅限公司内部成员使用！</a>
+	</div>
+	<!-- 公共身体 -->
+
+	<div class="publicBody">
+		<!-- 导航栏 -->
+		<div class="left" id="public_left">
+			<h2 class="leftH2">
+				<span class="span1"></span>功能列表 <span></span>
+			</h2>
+
+			<nav>
+				<div class="navbar-brand new_first" data-toggle="collapse" data-target="#public_basic">基础信息</div>
+				<div class="collapse navbar-collapse " id="public_basic">
+				   <ul class="navbar-nav second">
+				   </ul>
+				</div>
+				<div class="navbar-brand new_first" data-toggle="collapse" data-target="#public_data">综合数据管理</div>
+				<div class="collapse navbar-collapse " id="public_data">
+				   <ul class="navbar-nav second">
+				   </ul>
+				</div>
+				<div class="navbar-brand new_first" data-toggle="collapse" data-target="#public_statistics">查询统计分析</div>
+				<div class="collapse navbar-collapse " id="public_statistics">
+				   <ul class="navbar-nav second">
+				   </ul>
+				</div>
+				<div class="navbar-brand new_first" data-toggle="collapse" data-target="#public_control">远程终端控制</div>
+				<div class="collapse navbar-collapse " id="public_control">
+				   <ul class="navbar-nav second">
+				   </ul>
+				</div>
+				<div class="navbar-brand new_first" data-toggle="collapse" data-target="#public_about">关于</div>
+				<div class="collapse navbar-collapse " id="public_about">
+				   <ul class="navbar-nav second">
+				   </ul>
+				</div>
+			</nav>
+		</div>
+		<div class="right"><img src="../../static/images/微信图片_20190314-123625.png"></div>
+	</div>
+	<!-- 公共脚部 -->
+ <div class="publicFooter" id="public_footer">
+  <div>
+   <p>备注：欢迎来到山东鲁浦信息技术有限公司 关于我们-联系我们-审批号</p >
+  </div>
+ </div>
+</body>
+</html>

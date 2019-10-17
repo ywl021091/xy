@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>修改终端信息</title>
+<!-- bootstrap的css样式，大部分使用此命名 -->
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/html.css">
+<style>
+#formwrapper {
+	width: 450px;
+	margin: 15px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px #1E7ACE solid;
+}
+
+fieldset {
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+fieldset legend {
+	color: #1E7ACE;
+	font-weight: bold;
+	padding: 3px 20px 3px 20px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+.enter {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="publicRight">
+			<div>
+				<nav class="breadcrumb">
+					<a class="breadcrumb-item">基础信息</a> <a class="breadcrumb-item">终端信息维护</a>
+					<a class="breadcrumb-item active">终端修改</a>
+				</nav>
+			</div>
+			<div id="formwrapper">
+
+				<!-- 修改样式 在CSS里定义 -->
+				<form id="formup">
+					<fieldset>
+						<legend>修改终端信息</legend>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">编号</span>
+							</div>
+							<input id="terminalid" name="terminalid" readonly="readonly"
+								class="form-control">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">终端类型</span>
+							</div>
+							<input name="mtype" id="mtype" maxlength="10"
+								class="form-control">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">终端状态</span>
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="启用" id="use" />启用
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="停用" id="stopuse" />停用
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="作废" />作废
+							</div>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text"> &nbsp;责 任 人&nbsp; </span>
+							</div>
+							<input class="form-control" id="owner" type="text" name="owner" maxlength="10">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">客户编码</span>
+							</div>
+							<select class="form-control" id="customerid" name="customerid"></select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">设备识别码</span>
+							</div>
+							<input class="form-control" id="devicenum" type="text"
+								name="devicenum">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">请选择省份</span>
+							</div>
+							<select id="province" name="province" onchange="getCity(this)"
+								class="form-control"></select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">请选择城市</span>
+							</div>
+							<select id="city" name="city" class="form-control"></select>
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">经度</span>
+							</div>
+							<input class="form-control" name="longitude" type="number" 
+								step="0.000001" id="longitude" maxlength="10">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">纬度</span>
+							</div>
+							<input class="form-control" name="latitude" type="number"
+								step="0.000001" id="latitude" maxlength="10">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">机器码</span>
+							</div>
+							<input class="form-control" id="mac" type="text" name="mac">
+						</div>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">备注信息</span>
+							</div>
+							<textarea class="form-control" name="note" id="note" cols="25"
+								rows="3" maxlength="100" style="resize: none"></textarea>
+						</div>
+						<br>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">启用日期</span>
+							</div>
+							<input id="usedate" type="text" name="usedate"
+								readonly="readonly" class="form-control">
+						</div>
+						<div class="enter">
+							<input class="btn btn-primary btn-sm" type="button" onclick="up()"
+								value="保存">&nbsp;&nbsp; <input
+								class="btn btn-primary btn-sm" type="button" name="Submit"
+								onclick="javascript:history.back(-1);" value="返回">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragment/public :: #public_footer"></div>
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../../static/js/dataTables.bootstrap4.min.js"></script>
+	<script src="../../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../static/js/cityArray.js"></script>
+	<script src="../../../static/js/cityMethod.js"></script>
+	<script>
+		//提交表单
+		function up(){
+			let form = $("#formup").serialize();
+			$.ajax({
+				"url" : "/terminal/updataTerminal",
+				"type" : "POST",
+				"data" : form,
+				"dataType" : "json",
+				"success" : function(data) {
+					alert(data.status);
+					if(data.status == "更改成功"){
+						history.back();
+					};
+					
+				},
+				"error" : function() {
+					alert("连接出错");
+				}
+			});
+		}
+		$(document).ready(
+				function() {
+					//获取当前角色
+					let str;
+					let id = window.location.search;
+					id = id.slice(4);
+					$.ajax({
+						"url" : "/terminal/getTerminal",
+						"type" : "GET",
+						"data" : {
+							id : id
+						},
+						"dataType" : "json",
+						"success" : function(data) {
+							str = data.terminalid;
+							$("#terminalid").val(data.terminalid);
+							$("#mtype").val(data.mtype);
+							if (data.isuse == "启用") {
+								$("#use").prop("checked", "checked");
+							}
+							if (data.isuse == "停用") {
+								$("#stopuse").prop("checked", "checked");
+							}
+							if (data.isuse == "作废") {
+								$("#cancel").prop("checked", "checked");
+							}
+							$("#owner").val(data.owner);
+							//动态下拉框 
+							//客户代码
+							str1 = data.customerid;
+							$.ajax({
+								"url" : "/customer/selectCustomer",
+								"type" : "GET",
+								"data" : "",
+								"dataType" : "json",
+								"success" : function(data) {
+									let list = (data.list)
+									for (let i = 0; i < list.length; i++) {
+										if (str1 == list[i].customerid) {
+											$("#customerid").prepend(
+													"<option value="+list[i].customerid+" selected = 'selected'>"
+															+ list[i].customernum
+															+ "</option>");
+											continue;
+										}
+										$("#customerid").prepend(
+												"<option value="+list[i].customerid+">"
+														+ list[i].customernum
+														+ "</option>");
+									}
+								},
+								"error" : function() {
+									alert("客户信息出错");
+								}
+							});
+							$("#devicenum").val(data.devicenum);
+							$("#note").val(data.note);
+							$("#province").val(data.province);
+							$("#city").append(
+									"<option value='"+data.city+"'>"
+											+ data.city + "</option>");
+							$("#longitude").val(data.longitude);
+							$("#latitude").val(data.latitude);
+							$("#mac").val(data.mac);
+							$("#usedate").val(data.usedate);
+
+						},
+						"error" : function() {
+							alert("角色信息出错");
+						}
+					});
+				x
+				})
+	</script>
+</body>
+</html>

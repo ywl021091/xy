@@ -1,0 +1,181 @@
+
+.publicHeader {
+	height: 70px; /* 鎬婚珮 */
+	background: linear-gradient(
+	to bottom,#60acf0,#64a5df,
+	#62a0dd,#5994d6,#4f8ace,#4880ca);/* 渐变 */
+}
+
+.publicHeader .user {
+	margin-top:-5px;
+	
+}
+ img{
+	width:auto;
+	height:70px;
+}
+.publicHeader .user a {
+	
+	padding:8px;
+	line-height: 70px;
+	font-weight: bold;
+	color: white;
+	float:right;
+}
+
+.publicHeader h1 {
+	line-height: 70px;
+	text-align: center; /* 灞呬腑鏄剧ず */
+	font-family: KaiTi; /* 瀛椾綋绫诲瀷 */
+	font-size: 35px; /* 瀛椾綋澶у皬 */
+	color: #fff; /* 瀛椾綋棰滆壊 */
+	/* text-shadow: h-shadow v-shadow blur color;
+     h-shadow:蹇呴渶銆傛按骞抽槾褰辩殑浣嶇疆銆傚厑璁歌礋鍊笺��
+     v-shadow:蹇呴渶銆傚瀭鐩撮槾褰辩殑浣嶇疆銆傚厑璁歌礋鍊笺��
+     blur:鍙�夈�傛ā绯婄殑璺濈銆�
+     color:鍙�夈�傞槾褰辩殑棰滆壊銆傚弬闃� CSS 棰滆壊鍊笺��
+     */
+	text-shadow: 2px 1px #000;
+}
+
+.publicTime {
+	height: 28px;
+	line-height: 28px;
+	font-size: 12px;
+    background: linear-gradient(
+    to bottom,#f5f9f8,#eef2fb,
+    #e2ecf5,#e2ecf5,#e0edf6);/* 渐变 */
+}
+
+.publicTime a {
+	float: right;
+	color: #da557a;
+	margin-right: 50px;
+}
+
+.publicBody {
+	border-top: 10px solid #c2ccd5; /* 璁剧疆涓婅竟妗� */
+	/* Flex鏄疐lexible Box鐨勭缉鍐欙紝鎰忎负"寮规�у竷灞�"锛�
+    鐢ㄦ潵涓虹洅鐘舵ā鍨嬫彁渚涙渶澶х殑鐏垫椿鎬с�傝涓篎lex甯冨眬浠ュ悗锛�
+    瀛愬厓绱犵殑float銆乧lear鍜寁ertical-align灞炴�у皢澶辨晥銆� */
+	 display: flex;  /*鍙樹负寮规�х洅妯″瀷*/
+	background-color: white;
+	
+}
+.publicBody1 {
+	border-top: 10px solid #c2ccd5; /* 璁剧疆涓婅竟妗� */
+	/* Flex鏄疐lexible Box鐨勭缉鍐欙紝鎰忎负"寮规�у竷灞�"锛�
+    鐢ㄦ潵涓虹洅鐘舵ā鍨嬫彁渚涙渶澶х殑鐏垫椿鎬с�傝涓篎lex甯冨眬浠ュ悗锛�
+    瀛愬厓绱犵殑float銆乧lear鍜寁ertical-align灞炴�у皢澶辨晥銆� */
+	/* display: flex;  *//*鍙樹负寮规�х洅妯″瀷*/
+	background-color: white;
+	
+}
+
+.left {
+	width: 176px; /* 瀹藉害 */
+	background: url("../../static/images/leftBg.png") 0 0 repeat-y;
+	/* 鑳屾櫙鍥剧墖瀹氫綅锛屽畠鐨勪綅缃氨鏄�0 0銆� */
+	margin-right: 0px; /* 澶栬竟妗嗗彸杈硅窛 */
+	min-height: 620px; /* 鏈�灏忛珮搴� */
+    float:left;
+	
+}
+
+.span1 {
+	margin-right: 8px; /* 澶栬竟妗嗗彸渚ц窛绂� */
+}
+
+.leftH2 {
+	width: 142px;
+	height: 30px;
+	line-height: 30px;
+	font-size: 20px;
+	text-align: center;
+	margin: 10px 21px 10px 13px;
+	/* 瀹樻柟鐢ㄨ锛�     box-shadow:1px 2px 3px 4px #ccc inset锛�
+    1px  浠庡師鐐瑰紑濮嬶紝娌縳杞存鏂瑰悜鐨勯暱搴︼紙鍊樿嫢涓鸿礋鍊硷紝涓烘部x杞磋礋鏂瑰悜鐨勯暱搴︼級锛�
+銆�銆� 2px  浠庡師鐐瑰紑濮嬶紝娌縴杞存鏂瑰悜鐨勯暱搴︼紱锛堝�樿嫢涓鸿礋鍊硷紝涓烘部y杞磋礋鏂瑰悜鐨勯暱搴︼級锛�
+銆�銆�3px  闃村奖鐨勬ā绯婂害锛屽彧鍏佽涓烘鍊硷紱
+銆�銆�4px  闃村奖鎵╁睍鍗婂緞锛�
+銆�銆�#ccc  闃村奖棰滆壊锛�
+銆�銆�inset  璁剧疆涓哄唴闃村奖锛堝鏋滀笉鍐欒繖涓�硷紝榛樿涓哄闃村奖锛夛紱
+    */
+	box-shadow: 4px 4px 2px 1px rgba(212, 212, 212, 0.7);
+	border-radius: 4px; /* 鍦嗚 */
+	background-color: #60b3e7;
+	color: #fff;
+	border-radius: 4px;
+}
+
+.leftH2 span {
+	width: 10px;
+	height: 10px;
+	background-color: #4287c2;
+	border: 2px solid #CCCCCC;
+	/* inline-block涓昏鐨勭敤澶勬槸鐢ㄦ潵澶勭悊琛屽唴闈炴浛鎹㈠厓绱犵殑楂樺闂鐨勶紒
+    姣斿span銆乤绛夋爣绛撅紝姝ｅ父鎯呭喌涓嬪＋涓嶈兘璁剧疆瀹介珮鐨勶紝鍔犱笂璇ュ睘鎬т箣鍚庯紝灏卞彲浠ヨЕ鍙戣杩欑被鏍囩琛ㄧ幇寰楀鍧楃骇鍏冪礌涓�鏍凤紝鍙互璁剧疆瀹介珮銆� */
+	display: inline-block;
+	border-radius: 50%; /* 鍦嗚 */
+}
+
+
+
+/* 鏂板鑸爮 */
+.new_first {
+	font-size: 14px;
+	/* margin: 0 20px;  */ /* 涓婁笅闂磋窛0锛屽乏鍙抽棿璺�20 */
+	font-weight: bold; /* 瀛椾綋鍔犵矖 */
+	height: 30px;
+	line-height: 30px;
+	cursor: pointer; /* 灏忔墜 */
+	text-align: center;
+	border-bottom: #ccc 1px dotted;
+	width: 168px;
+}
+
+.second {
+	text-center;
+	font-size: 13px;
+}
+.second2{
+	display: inline;
+	font-size: 13px;
+}
+
+.second ul {
+	margin: 0;
+	padding: 0;
+}
+
+.second li {
+	width: 168px;
+	height: 20px;
+	line-height: 20px;
+	text-align: center;
+	border-bottom: #ccc 1px dotted;
+	/* dashed锛堣櫄绾匡級| dotted锛堢偣绾匡級| solid锛堝疄绾匡級銆� */
+	list-style: none;
+}
+
+.publicFooter {
+	width: 100%;
+	line-height: 40px;
+	text-align: center;
+	background: #66ccff;
+	/* color: #fff; */
+}
+
+.publicRed {
+	color: red;
+}
+ .publicRight{
+ 	width:100%;
+	/* position:absolute;
+	left:170px; */
+} 
+.publicRight1{
+	position:absolute;
+	left:1000px;
+	float:right;
+}

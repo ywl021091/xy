@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>添加终端数据表</title>
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/html.css">
+<style type="text/css">
+#formwrapper {
+	width: 500px;
+	margin: 15px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px #1E7ACE solid;
+}
+
+fieldset {
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+fieldset legend {
+	color: #1E7ACE;
+	font-weight: bold;
+	padding: 3px 20px 3px 20px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+.enter {
+	text-align: center;
+}
+#flexible dd{
+	width:200px;
+	float: left;
+	margin-left: 15px;
+}
+</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="container">
+			<div>
+				<nav class="breadcrumb">
+					<a class="breadcrumb-item">基础信息</a> <a class="breadcrumb-item">终端类型表</a>
+					<a class="breadcrumb-item active">新增终端设备表</a>
+				</nav>
+			</div>
+			<div id="formwrapper">
+			<fieldset>
+						<legend>新建终端类型表</legend>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">设置表名(仅小写字母)</span>
+							</div>
+							<input type="text" name="tName" id="tName" class="form-control"
+								oninput="value=value.replace(/[^a-z]/g,'')"  maxlength="20"
+								onblur="tName_uq_unnull()">
+						</div>
+						<div class="alert alert-warning" id="tNameAlert"
+							style="display: none">
+							<strong>提示！</strong>此用户名被占用或此选项为空。
+						</div>
+						
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">选择所需要的表字段 </span>
+							</div>
+						</div>
+						<div id="flexible"></div>
+			</fieldset>
+			<br>
+			<div class="enter">
+							<input class="btn btn-primary btn-sm" id="button" type="button" onclick="tableName()"
+								value="保存">&nbsp;&nbsp; <input
+								class="btn btn-primary btn-sm" type="button" name="button"
+								onclick="javascript:history.back(-1);" value="返回">
+						</div>
+			<!-- <button onclick="tableName()">上传数据</button> -->
+			</div>
+		</div>
+	</div>
+
+</body>
+<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    refresh();
+});
+//拼接复选框
+function refresh() {
+	$.ajax({
+		"url" : "/temp/names",
+		"type" : "POST",
+		"data" : "",
+		"dataType" : "json",
+		"success" : function(data) {
+			var result = "";
+			for(var i = 0; i<data.length; i++){
+				result += '<dd><label><input type="checkbox" name="hobby" value="'+data[i].templatenum+'">'+data[i].templatename+'</label></dd>';
+			}
+			$("#flexible").empty().append(result);
+		},
+		"error" : function() {
+			alert("出错了！");
+		}
+	});
+};
+
+function tableName(){
+	var names = "";
+	var temp = "";
+	var check = document.getElementsByName("hobby");
+	var tName = $("#tName").val();
+	for(var i = 0; i<check.length; i++){
+		if(check[i].checked){
+			temp = check[i].value;
+			names = names + "," +temp;
+		}
+	}
+	$.ajax({
+		"url" : "/temp/selectTable",
+		"type" : "POST",
+		"data" :{
+			"tName":tName,
+            "names":names
+        },
+		"dataType" : "text",
+		"success" : function(data){
+			alert(data);
+		},
+		
+	});
+	
+}
+
+//非空且唯一判断
+function tName_uq_unnull() {
+	var r = "false";
+	var tName = $("#tName").val();
+	var length = tName.length;
+	if (length == null || length == "" || length == undefined) {
+		$("#tNameAlert").show();
+		return "false";
+	} else {
+		$("#tNameAlert").hide();
+		r = "true";
+	}
+	$.ajax({
+		"async" : false,
+		"url" : "/temp/selectTName",
+		"data" : {
+			"tName" : tName
+		},
+		"type" : "get",
+		"dataType" : "json",
+		"success" : function(data) {
+			if (data.status == "200") {
+				$("#tNameAlert").show();
+				r = "false";
+			}
+			if (data.status == "400") {
+				$("#tNameAlert").hide();
+				r = "true";
+			}
+		},
+		"error" : function() {
+			alert("请求失败");
+			r = "false";
+		}
+	});
+	return r;
+}
+
+</script>
+</html>

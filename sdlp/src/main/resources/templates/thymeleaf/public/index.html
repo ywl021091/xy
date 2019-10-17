@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>首页</title>
+ <link rel="stylesheet" href="../../../static/css/bootstrap.min.css"> 
+<link rel="stylesheet" href="../../../static/css/html.css">
+<style>
+/*.container{
+	background-image: url(../../../static/images/首页图.jpg);
+	background-size:cover;
+	width: 1000px;
+	height: 520px;
+	position:relative;
+	margin-top: 20px;
+}
+.container div{
+	width: 7%;
+	height: 3%;
+	position: absolute;
+	text-align: center;
+	
+}
+ #pb19{
+	margin-top: 222px;
+	margin-left: 191px;
+	
+}
+#pb19_two{
+	margin-top: 395px;
+	margin-left: 182px;
+}
+#pb35{
+	margin-top: 308px;
+	margin-left: 80px;
+}
+#pb34{
+	margin-top: 495px;
+	margin-left: 80px;
+}
+#pb13{
+	margin-top: 230px;
+	margin-left: 300px;
+}
+#pf25{
+	margin-top: 134px;
+	margin-left: 410px;
+}
+#pb56{
+	margin-top: 228px;
+	margin-left: 434px;
+}
+#pf28{
+	margin-top: 260px;
+	margin-left: 400px;
+}
+#pf43{
+	margin-top: 92px;
+	margin-left: 633px;
+}
+#pf51{
+	margin-top: 126px;
+	margin-left: 635px;
+}
+#pb25{
+	margin-top: 178px;
+	margin-left: 695px;
+}
+#pb28{
+	margin-top: 200px;
+	margin-left: 695px;
+}
+#pb31{
+	margin-top: 228px;
+	margin-left: 695px;
+}
+#pf16{
+	margin-top: 478px;
+	margin-left: 585px;
+}
+#pb22{
+	margin-top: 250px;
+	margin-left: 864px;
+}
+#pf40{
+	margin-top: 421px;
+	margin-left: 796px;
+} */
+
+      /* svg{
+           background-position: center; */
+          /* margin: 0 ; */
+          /* margin-left:90px; 
+      } */
+      .orui-img{
+          width:1050px;
+          height:620px;
+          background: url('../../../static/images/orui1.jpg') ;
+          background-size:contain ;
+          background-repeat: no-repeat;
+          /* background-position-x: center  ;  
+          background-repeat: no-repeat;
+          margin-top: 0;
+          padding-top: 0;
+          margin-right:auto;
+          margin-left: auto; */
+          
+      }
+      .water {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 0;
+          animation: dash 5s linear 1;
+      }
+       
+      .no-water {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 0;
+          animation: dash 5s linear 1;
+      }
+       
+      .first-run {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 0;
+          animation: dash 5s linear 1;
+      }
+       
+      .runing {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          animation: run 1s linear infinite;
+      }
+       
+       .runwater {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          animation: run 3s linear infinite;
+      } 
+       
+      @keyframes dash {
+          to {
+              stroke-dashoffset: 100;
+          }
+      }
+       
+      @keyframes run {
+          from {
+              stroke-dasharray: 20, 5;
+          }
+          to {
+              stroke-dasharray: 23, 5;
+          }
+      }
+    
+</style>
+</head>
+<body> 
+    <div th:replace="fragment/public :: #public_header"></div>
+    <div th:replace="fragment/public :: #public_time"></div>
+    <div class="publicBody">
+	    <div th:replace="fragment/public :: #public_left"></div>
+	   	<div class="publicRight">	
+		   <svg class="orui-img"  xmlns="http://www.w3.org/2000/svg" version="1.1" height="800" width="800"  viewBox="100 100 800 484" preserveAspectRatio="xMidYMid meet">
+		        <!-- 蓝色管道 -->
+		        <polyline class="water" id="water-1" points="121 144,203 144" style="stroke:blue;stroke-width:10;fill: 2px solid red" fill-rule="evenodd"/>
+		        <polyline class="water" id="water-2" points="198 144,198 180" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-3" points="244 243,287 243" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-4" points="350 256,364 256" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-5" points="360 255,360 448" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-6" points="141 148,141 394" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-7" points="145 390,185 390" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-8" points="242 438,278 438" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-9" points="346 450,378 450" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-10" points="412 448,477 448" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-11" points="474 451,474 385" style="fill:white;stroke:blue;stroke-width:10" />
+		        <!-- 进酸阀进口 -->
+		        <polyline class="water" id="water-12" points="502 425,475 425" style="fill:white;stroke:blue;stroke-width:10" />
+		        <polyline class="water" id="water-24" points="528 425,575 425" style="fill:white;stroke:blue;stroke-width:10" />  
+		        <!-- 红色管道 -->
+		        <polyline class="no-water" id="water-13" points="515 323,515 288" style="fill:white;stroke:red;stroke-width:10"/>
+		        <polyline class="no-water" id="water-14" points="510 292,626 292" style="fill:white;stroke:red;stroke-width:10"/> 
+		        <polyline class="no-water" id="water-15" points="621 290,621 218" style="fill:white;stroke:red;stroke-width:10"/>
+		        <polyline class="no-water" id="water-16" points="618 222,660 222" style="fill:white;stroke:red;stroke-width:10"/> 
+		        <!-- 回酸阀出口 -->
+		        <polyline class="no-water" id="water-17" points="599 288,599 338" style="fill:white;stroke:red;stroke-width:10"/>
+		        <polyline class="no-water" id="water-18" points="599 370,599 403" style="fill:white;stroke:red;stroke-width:10"/>
+		        <!-- 室外排气点出口 -->
+		        <polyline class="no-water" id="water-19" points="690 195,690 158" style="fill:white;stroke:red;stroke-width:10"/>
+		        <polyline class="no-water" id="water-20" points="686 163,759 163" style="fill:white;stroke:red;stroke-width:10"/> 
+		        <!-- 投加泵进口 -->
+		        <polyline class="no-water" id="water-21" points="675 363,740 363" style="fill:white;stroke:red;stroke-width:10"/>
+		        <polyline class="no-water" id="water-22" points="680 285,680 365" style="fill:white;stroke:red;stroke-width:10"/> 
+		        <polyline class="no-water" id="water-25" points="785 377,830 377" style="fill:white;stroke:red;stroke-width:10"/> 
+		       <!--  排氢风机 -->
+		        <polyline class="no-water" id="water-23" points="789 229,716 229" style="fill:white;stroke:red;stroke-width:10"/>
+		         <!-- <rect id="key" width="20" height="20" x=190 y=190 style="fill:gray;stroke-width:1;stroke:rgb(0,0,0)" /> -->
+		        <!-- 流量值 -->
+		        <rect width="65" id="flow" height="20" x=730 y=460 style="fill:black"></rect>
+		        
+		         <!-- 余氯值 -->
+		        <rect width="65" id="residual" height="20" x=730 y=439 style="fill:black"></rect>
+		        <!-- 盐水罐 -->
+		        <rect width="70" id="brinetank" height="25" x=182 y=274 style="fill:black"></rect>
+		        <!-- 清水罐 -->
+		        <rect width="70" id="wantertank" height="25" x=178 y=474 style="fill:black"></rect>
+		        <!-- 盐水泵 -->
+		        <rect width="70" id="brinepump" height="25" x=283 y=304 style="fill:black"></rect>
+		        <!-- 清水泵 -->
+		        <rect width="70" id="wanterpump" height="25" x=278 y=498 style="fill:black"></rect>
+		         <!-- 投加泵 -->
+		         <rect width="70" id="dosingpump" height="25" x=785 y=400 style="fill:black"></rect>
+		         <!-- 排氢风机 -->
+		         <rect width="70" id="fan" height="25" x=780 y=302 style="fill:black"></rect>
+		        <!--<text style="fill:black;" x=220 y=190 font-size="20" font-family="YouYuan" x="100" y="100" width="200" height="30">点击阀门
+		        </text> -->
+		    </svg>
+	    </div>
+  	</div>
+    
+    <div th:replace="fragment/public :: #public_footer"></div> 
+    <script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script src="../../../static/js/dataTables.bootstrap4.min.js"></script>
+	<script src="../../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../static/js/echarts.min.js"></script>
+	<script type="text/javascript">
+	var keybtn=document.querySelector('#key');
+    var water1 = document.querySelector('#water-1');
+    var water2 = document.querySelector('#water-2');
+    var water3 = document.querySelector('#water-3');
+    var water4 = document.querySelector('#water-4');
+    var water5 = document.querySelector('#water-5');
+    var water6 = document.querySelector('#water-6');
+    var water7 = document.querySelector('#water-7');
+    var water8 = document.querySelector('#water-8');
+    var water9 = document.querySelector('#water-9');
+    var water10 = document.querySelector('#water-10');
+    var water11 = document.querySelector('#water-11');
+    var water13 = document.querySelector('#water-13');
+    var water14 = document.querySelector('#water-14');
+    var water15 = document.querySelector('#water-15');
+    var water16 = document.querySelector('#water-16');
+    var water19 = document.querySelector('#water-19');
+    var water20 = document.querySelector('#water-20');
+    var water21 = document.querySelector('#water-21');
+    var water22 = document.querySelector('#water-22');
+    var water23 = document.querySelector('#water-23');
+    var water25 = document.querySelector('#water-25');
+    water2.addEventListener("webkitAnimationEnd", function(evt){ //动画结束时事件
+        this.className.baseVal="runing";
+        water1.className.baseVal="runing";
+        water3.className.baseVal="runing";
+        water4.className.baseVal="runing";
+        water5.className.baseVal="runing";
+        water6.className.baseVal="runing";
+        water7.className.baseVal="runing";
+        water8.className.baseVal="runing";
+        water9.className.baseVal="runing";
+        water10.className.baseVal="runing";
+        water11.className.baseVal="runing";
+        water13.className.baseVal="runing";
+        water14.className.baseVal="runing";
+        water15.className.baseVal="runing";
+        water16.className.baseVal="runing";
+        water19.className.baseVal="runing";
+        water20.className.baseVal="runing";
+        water21.className.baseVal="runing";
+        water22.className.baseVal="runing";
+        water23.className.baseVal="runing";
+        water25.className.baseVal="runing";
+    }, false);  
+    
+    // water1.addEventListener("webkitAnimationEnd", function(evt){ //动画结束时事件
+    //     this.style.strokeDashoffset=0;
+    // }, false);
+
+    // keybtn.addEventListener("click", function(){    
+    //     water2.className.baseVal="first-run";
+    // }, false);
+
+	/*$.ajax({
+				"url" : "/indexRefresh/refresh",
+				"data" : "",
+				"type" : "post",
+				"dataType" : "json",
+				"success" : function(data) {
+					if(data.pb13 == true){
+						document.getElementById("pb13").innerHTML="启动"; 
+					}else if(data.pb13 == false){
+						document.getElementById("pb13").innerHTML="停止";
+					};
+					if(data.pb19 == true){
+						document.getElementById("pb19").innerHTML="启动"; 
+						document.getElementById("pb19_two").innerHTML="启动"; 
+					}else if(data.pb19 == false){
+						document.getElementById("pb19").innerHTML="停止"; 
+						document.getElementById("pb19_two").innerHTML="停止"; 
+					};
+					if(data.pb22 == true){
+						document.getElementById("pb22").innerHTML="启动"; 
+					}else if(data.pb22 == false){
+						document.getElementById("pb22").innerHTML="停止"; 
+					};
+					if(data.pb25 == true){
+						document.getElementById("pb25").innerHTML="高"; 
+					}else if(data.pb25 == false){
+						document.getElementById("pb25").innerHTML="低"; 
+					};
+					if(data.pb28 == true){
+						document.getElementById("pb28").innerHTML="高"; 
+					}else if(data.pb28 == false){
+						document.getElementById("pb28").innerHTML="低"; 
+					};
+					if(data.pb31 == true){
+						document.getElementById("pb31").innerHTML="高"; 
+					}else if(data.pb31 == false){
+						document.getElementById("pb31").innerHTML="低"; 
+					};
+					if(data.pb34 == true){
+						document.getElementById("pb34").innerHTML="高"; 
+					}else if(data.pb34 == false){
+						document.getElementById("pb34").innerHTML="低"; 
+					};
+					if(data.pb35 == true){
+						document.getElementById("pb35").innerHTML="高"; 
+					}else if(data.pb35 == false){
+						document.getElementById("pb35").innerHTML="低"; 
+					};
+					if(data.pb56 == true){
+						document.getElementById("pb56").innerHTML="报警"; 
+					}else if(data.pb56 == false){
+						document.getElementById("pb56").innerHTML="正常"; 
+					};
+					if(data.pf16 != null){
+						document.getElementById("pf16").innerHTML=data.pf16;
+					};
+					if(data.pf25 != null){
+						document.getElementById("pf25").innerHTML=data.pf25;
+					};
+					if(data.pf28 != null){
+						document.getElementById("pf28").innerHTML=data.pf28;
+					};
+					if(data.pf40 != null){
+						document.getElementById("pf40").innerHTML=data.pf40;
+					};
+					if(data.pf43 != null){
+						document.getElementById("pf43").innerHTML=data.pf43;
+					};
+					if(data.pf51 != null){
+						document.getElementById("pf51").innerHTML=data.pf51;
+					};
+				
+				}
+			});
+
+	    };
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*  function refresh() {
+		 var select = document.getElementById("sbsbm");
+	    	for(var i=0; i<select.length; i++){
+	          	if(select[i].selected==true) {
+	          		var text=select[i].value;
+	          		if("所有" == text){
+	          			alert("请选择一台设备查看数据。");
+	          	}
+	          }
+	    }
+		 
+		 $.ajax({
+				"url" : "/indexRefresh/refresh",
+				"data" : "",
+				"type" : "post",
+				"dataType" : "json",
+				"success" : function(data) {
+					if(data.pb13 == true){
+						document.getElementById("pb13").innerHTML="启动"; 
+					}else if(data.pb13 == false){
+						document.getElementById("pb13").innerHTML="停止";
+					};
+					if(data.pb19 == true){
+						document.getElementById("pb19").innerHTML="启动"; 
+						document.getElementById("pb19_two").innerHTML="启动"; 
+					}else if(data.pb19 == false){
+						document.getElementById("pb19").innerHTML="停止"; 
+						document.getElementById("pb19_two").innerHTML="停止"; 
+					};
+					if(data.pb22 == true){
+						document.getElementById("pb22").innerHTML="启动"; 
+					}else if(data.pb22 == false){
+						document.getElementById("pb22").innerHTML="停止"; 
+					};
+					if(data.pb25 == true){
+						document.getElementById("pb25").innerHTML="高"; 
+					}else if(data.pb25 == false){
+						document.getElementById("pb25").innerHTML="低"; 
+					};
+					if(data.pb28 == true){
+						document.getElementById("pb28").innerHTML="高"; 
+					}else if(data.pb28 == false){
+						document.getElementById("pb28").innerHTML="低"; 
+					};
+					if(data.pb31 == true){
+						document.getElementById("pb31").innerHTML="高"; 
+					}else if(data.pb31 == false){
+						document.getElementById("pb31").innerHTML="低"; 
+					};
+					if(data.pb34 == true){
+						document.getElementById("pb34").innerHTML="高"; 
+					}else if(data.pb34 == false){
+						document.getElementById("pb34").innerHTML="低"; 
+					};
+					if(data.pb35 == true){
+						document.getElementById("pb35").innerHTML="高"; 
+					}else if(data.pb35 == false){
+						document.getElementById("pb35").innerHTML="低"; 
+					};
+					if(data.pb56 == true){
+						document.getElementById("pb56").innerHTML="报警"; 
+					}else if(data.pb56 == false){
+						document.getElementById("pb56").innerHTML="正常"; 
+					};
+					if(data.pf16 != null){
+						document.getElementById("pf16").innerHTML=data.pf16;
+					};
+					if(data.pf25 != null){
+						document.getElementById("pf25").innerHTML=data.pf25;
+					};
+					if(data.pf28 != null){
+						document.getElementById("pf28").innerHTML=data.pf28;
+					};
+					if(data.pf40 != null){
+						document.getElementById("pf40").innerHTML=data.pf40;
+					};
+					if(data.pf43 != null){
+						document.getElementById("pf43").innerHTML=data.pf43;
+					};
+					if(data.pf51 != null){
+						document.getElementById("pf51").innerHTML=data.pf51;
+					};
+				
+				}
+			});
+
+	    };
+       //每10秒执行 
+    var t2 = setInterval(function() {
+    	refresh();
+    }, 10000);
+  
+    $("#sbsbm").change(function(){
+    	refresh();
+    });
+    
+    $(document).ready(function(){
+        refresh();
+    });
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var myChart = echarts.init(document.getElementById('main'));
+ 
+    var uploadedDataURL = "js/flights.json";
+    
+
+    myChart.showLoading();
+
+    $.getJSON(uploadedDataURL, function(data) {
+
+        myChart.hideLoading();
+
+        function getAirportCoord(idx) {
+            return [data.airports[idx][3], data.airports[idx][4]];
+        }
+        var routes = data.routes.map(function (airline) {
+            return [
+                getAirportCoord(airline[1]),
+                getAirportCoord(airline[2])
+            ];
+        });
+
+        myChart.setOption({
+            geo3D: {
+                map: 'world',
+                shading: 'realistic',
+                silent: true,
+                environment: '#333',
+                realisticMaterial: {
+                    roughness: 0.8,
+                    metalness: 0
+                },
+                postEffect: {
+                    enable: true
+                },
+                groundPlane: {
+                    show: false
+                },
+                light: {
+                    main: {
+                        intensity: 1,
+                        alpha: 30
+                    },
+                    ambient: {
+                        intensity: 0
+                    }
+                },
+                viewControl: {
+                    distance: 70,
+                    alpha: 89,
+
+                    panMouseButton: 'left',
+                    rotateMouseButton: 'right'
+                },
+
+                itemStyle: {
+                    areaColor: '#000'
+                },
+
+                regionHeight: 0.5
+            },
+            series: [{
+                type: 'lines3D',
+
+                coordinateSystem: 'geo3D',
+
+                effect: {
+                    show: true,
+                    trailWidth: 1,
+                    trailOpacity: 0.5,
+                    trailLength: 0.2,
+                    constantSpeed: 5
+                },
+
+                blendMode: 'lighter',
+
+                lineStyle: {
+                    width: 0.2,
+                    opacity: 0.05
+                },
+
+                data: routes
+            }]
+        });
+
+        window.addEventListener('keydown', function () {
+            myChart.dispatchAction({
+                type: 'lines3DToggleEffect',
+                seriesIndex: 0
+            });
+        });
+    });
+     */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+	</script>
+</body>
+</html>

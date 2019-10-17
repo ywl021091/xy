@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="UTF-8">
+	<title>信息警告</title>
+	<link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../../static/css/html.css">
+	<style>
+		.color {
+			background-color:
+		}
+		
+		.round {
+			width: 100px;
+			height: 20px;
+			border: 2px solid #dedede;
+			border-radius: 25px;
+			background-color: #dbeadf;
+			margin-left: 15px;
+			text-align:center;
+		}
+		.round1 {
+			width: 100px;
+			height: 20px;
+			border: 2px solid #dedede;
+			border-radius: 25px;
+			background-color: #dbeadf;
+			margin-left: 70px;
+			text-align:center;
+		}
+		.red {
+			width: 100px;
+			height: 20px;
+			border: 2px solid #dedede;
+			border-radius: 25px;
+			background-color: #FFB6C1;
+			margin-left: 15px;
+		}
+		.red1 {
+			width: 100px;
+			height: 20px;
+			border: 2px solid #dedede;
+			border-radius: 25px;
+			background-color: #FFB6C1;
+			margin-left: 70px;
+		}
+		.nav-item a {
+			font-size: 15px;
+			color: #495057 !important;
+		}
+		
+		.right {
+			min-width: 80%;
+		}
+		
+		#bgBox {
+			width: 100%;
+			height: 40px;
+			margin-top: 20px;
+			display: flex;
+			flex-direction: row-reverse;
+		}
+		
+		.box {
+			width: 80px;
+			height: 25px;
+			text-align: center;
+		}
+		
+		#box01 {
+			background-color: #dbeadf;
+		}
+		
+		#box02 {
+			background-color: #FFB6C1;
+		}
+		
+		#box03 {
+			background-color: #dca14e;
+		}
+		
+		#box04 {
+			width: 150px;
+		}
+		
+		#box05 {
+			width: 150px;
+		}
+		
+		.box06 {
+			width: 120px;
+		}
+		
+		.green {
+			width: 100%;
+			height: 25px;
+			background-color: #dbeadf;
+		}
+		
+		.yellow {
+			width: 100%;
+			height: 25px;
+			background-color: #dca14e;
+		}
+		
+		#dataTable {
+			min-width: 100%;
+		}
+		
+		#dataTable th {
+			min-width: 140px;
+		}
+		
+		#dataTable a {
+			text-decoration: none;
+			font-weight: bold;
+		}
+		.jc-table-1{
+			margin-right:30px;
+			margin-left:30px;
+		}
+		.jc-table {
+			width: 100% !important;
+			text-align: left;
+		}
+		.jc-table-1 tr td {
+			
+			height: 40px;
+			font-size: 15px;
+			text-align:center;
+			border-bottom:1px solid #fff;
+		}
+		.jc-table tr td {
+			width: 20%;
+			height: 40px;
+			font-size: 15px;
+			text-align:center;
+			border-bottom:1px solid #fff;
+		}
+		.qt-table tr td{
+			width:30%;
+			height:40px;
+			font-size: 15px;
+			border-bottom:1px solid #fff;
+		}
+		.jc-div{
+			background-color:#f3f3f4;
+			width:102%;
+			height:210px;
+			padding:35px;
+			border-radius:5px;
+			box-shadow:2px 2px 10px #999;
+		}
+		.qt-div{
+			background-color:#f3f3f4;
+			height:320px;
+			padding:30px;
+			border-radius:5px;
+			box-shadow:2px 2px 10px #999;
+		}
+		@media (min-width: 768px){
+			.col-md-4 {
+		    -ms-flex: 0 0 33.333333%;
+		    flex: 0 0 33.333333%;
+		    max-width: 32.333333% !important;
+			margin-right: 9px;
+		}
+		}
+		.jz{
+			text-align: center;
+			font-weight: 400;
+		}
+		.jz2{
+			text-align: left;
+			font-weight: 400;
+			margin-right:0px;
+		}
+		.jz1{
+			text-align: center;
+			font-weight: 400;
+			margin-right:0px;
+		}
+		.sx{
+			background-color: #B0C4DE;
+			border: 4px solid #f3f3f4;
+		}
+		.sx1{
+			margin-left:10px;
+		}
+		.sx-h{
+			width:55px !important;
+		}
+		.sx-h-1{
+			width:180px !important;s
+		}
+	</style>
+</head>
+
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="container m-4">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li class="nav-item"><a class="nav-link active"
+					data-toggle="tab" href="#zc">显示设备正常值</a></li>
+				<li class="nav-item"><a class="nav-link" data-toggle="tab"
+					href="#cw">显示设备异常值</a></li>
+			</ul>
+			<!-- Tab panes -->
+			<div class="tab-content mt-3">
+				<div id="zc" class="container tab-pane active">
+					<div class="row jc-div">
+						<table class="jc-table-1 col-md-12">
+							<tr>
+								<td class="sx-h">属性</td>
+								<td class="zhi sx-h-1">值</td>
+								<td class="sx-h">属性</td>
+								<td class="zhi sx-h-1">值</td>
+							
+							</tr>
+							<tr>
+								<td  class="sx">机器码</td>
+								<td><div id="d1"></div></td>
+								<td class="sx">更新日期</td>
+								<td id="d2" ><div></div></td>
+							</tr>
+							<tr>
+								<td class="sx">余氯值</td>
+								<td><div id="yqz"></div></td>
+								<td class="sx">流量值</td>
+								<td><div id="llz"></div></td>
+							</tr>
+						</table>
+					</div>
+					<div class="row mt-3">
+						<div class="col-md-4 qt-div ">
+							<table class="qt-table">
+								<tr><th colspan="2" class="jz">一号机器 </th></tr>
+								<tr >
+									<td >属性</td>
+									<td class="jz">值</td>
+								</tr>
+								<tr>
+									<td class="sx">电解累计分钟</td>
+									<td class="jz"><div id="djlj1"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解电压实际值</td>
+									<td class="jz"><div id="dysjz1"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解槽温度值</td>
+									<td class="jz"><div id="djcwdz1"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">投加运行频率</td>
+									<td class="jz"><div id="yxpl1"></div></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-4 qt-div ">
+							<table class="qt-table ">
+								<tr>
+									<th colspan="2" class="jz">二号机器</th>
+								</tr>
+								<tr >
+									<td>属性</td>
+									<td class="jz">值</td>
+								</tr>
+								<tr>
+									<td class="sx">电解累计分钟</td>
+									<td class="jz"><div id="djlj2"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解电压实际值</td>
+									<td class="jz"><div id="dysjz2"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解槽温度值</td>
+									<td class="jz"><div id="djcwdz2"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">投加运行频率</td>
+									<td class="jz"><div id="yxpl2"></div></td>
+								</tr>
+							</table>
+						</div>
+						<div class="col-md-4 qt-div ">
+							<table class="qt-table ">
+								<tr>
+									<th colspan="2" class="jz">三号机器</th>
+								</tr>
+								<tr >
+									<td>属性</td>
+									<td class="jz ">值</td>
+								</tr>
+								<tr>
+									<td class="sx">电解累计分钟</td>
+									<td class="jz"><div id="djlj3"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解电压实际值</td>
+									<td class="jz"><div id="dysjz3"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">电解槽温度值</td>
+									<td class="jz"><div id="djcwdz3"></div></td>
+								</tr>
+								<tr>
+									<td class="sx">投加运行频率</td>
+									<td class="jz"><div id="yxpl3"></div></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+			</div>
+			<div id="cw" class="container tab-pane fade ">
+				<div class="row jc-div">
+					<table class="jc-table col-md-12">
+						
+						<tr>
+							<td>属性</td>
+							<td class="jz2 ml-3">值</td>
+							<td>属性</td>
+							<td class="jz2">值</td>
+							
+						</tr>
+						<tr>
+							<td>机器码</td>
+							<td id="d3"></td>
+							<td>更新日期</td>
+							<td id="d4"></td>
+							
+						</tr>
+						<tr>
+							<td>缺水报警</td>
+							<td id="qs"></td>
+							<td>控制电源故障</td>
+							<td id="dygz"></td>
+						</tr>
+						<tr>
+							<td>风压报警</td>
+							<td><div id="fybj"></div></td>
+							<td>氢气报警</td>
+							<td><div id="qqbj"></div></td>
+						</tr>
+					</table>
+				</div>
+				<div class="row mt-3">
+					<div class="col-md-4 qt-div ">
+						<table class="qt-table">
+							<tr><th colspan="2" class="jz">一号机器 </th></tr>
+							<tr >
+								<td>属性</td>
+								<td class="jz">值</td>
+							</tr>
+							<tr>
+								<td>电解槽压力</td>
+								<td class="jz1" ><div id="djcyl1"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽流量低</td>
+								<td class="jz1"><div id="djcll1"></div></td>
+							</tr>
+							<tr>
+								<td>电解电源故障</td>
+								<td class="jz1"><div id="dygz1"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽温度高</td>
+								<td class="jz1"><div id="wdg1"></div></td>
+							</tr>
+							<tr>
+								<td>电解电压过高</td>
+								<td class="jz1"><div id="dyg1"></div></td>
+							</tr>
+						</table>
+					</div>
+					<div class="col-md-4 qt-div ">
+						<table class="qt-table ">
+							<tr>
+								<th colspan="2" class="jz">二号机器</th>
+							</tr>
+							<tr >
+								<td>属性</td>
+								<td class="jz">值</td>
+							</tr>
+							<tr>
+								<td>电解槽压力</td>
+								<td><div id="djcyl2"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽流量低</td>
+								<td><div id="djcll2"></div></td>
+							</tr>
+							<tr>
+								<td>电解电源故障</td>
+								<td><div id="dygz2"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽温度高</td>
+								<td><div id="wdg2"></div></td>
+							</tr>
+							<tr>
+								<td>电解电压过高</td>
+								<td><div id="dyg2"></div></td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="col-md-4 qt-div ">
+						<table class="qt-table ">
+							<tr>
+								<th colspan="2" class="jz">三号机器</th>
+							</tr>
+							<tr >
+								<td>属性</td>
+								<td class="jz">值</td>
+							</tr>
+							<tr>
+								<td>电解槽压力</td>
+								<td><div id="djcyl3"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽流量低</td>
+								<td><div id="djcll3"></div></td>
+							</tr>
+							<tr>
+								<td>电解电源故障</td>
+								<td><div id="dygz3"></div></td>
+							</tr>
+							<tr>
+								<td>电解槽温度高</td>
+								<td><div id="wdg3"></div></td>
+							</tr>
+							<tr>
+								<td>电解电压过高</td>
+								<td><div id="dyg3"></div></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div id="bgBox">
+					<div id="box02" class="box"></div>
+					<div class="box">报警</div>
+					&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div id="box01" class="box"></div>
+					<div class="box">正常</div>
+					&nbsp; &nbsp;&nbsp;
+				</div>
+			</div>		
+	</div>
+	</div>
+	</div>
+	<div th:replace="fragment/public :: #public_footer"></div>
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../static/js/bootstrap.bundle.min.js"></script>
+	
+	<script type="text/javascript">
+
+	
+	
+	
+	
+	function fn(){
+			$.ajax({
+				url : "/warn/selectWarn",
+				type : "post",//请求类型
+				//无请求参数
+				dataType : "json"//返回值类型
+			}).then(function(result) {
+				console.log(result);
+				//先取出结果中的数据
+				a=result;
+				var sj = result[0];
+				console.log(sj.mac);
+				$("#d1").append(sj.mac);
+				$("#d2").append(sj.timestamp);
+				$("#d3").append(sj.mac);
+				$("#d4").append(sj.timestamp);
+				$("#yqz").append(sj.pf43);
+				$("#llz").append(sj.pf51);
+				$("#djlj1").append(sj.pf16);
+				$("#djlj2").append(sj.pf17);
+				$("#djlj3").append(sj.pf18);
+				$("#dysjz1").append(sj.pf25);
+				$("#dysjz2").append(sj.pf26);
+				$("#dysjz3").append(sj.pf27);
+				$("#djcwdz1").append(sj.pf28);
+				$("#djcwdz2").append(sj.pf29);
+				$("#djcwdz3").append(sj.pf30);
+				$("#yxpl1").append(sj.pf40);
+				$("#yxpl2").append(sj.pf41);
+				$("#yxpl3").append(sj.pf42);
+				if (sj.pb50 == true) {
+					$("#djcyl1").append('<div class="round"></div>');
+				} else {
+					$("#djcyl1").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb51 == true) {
+					$("#djcyl2").append('<div class="round"></div>');
+				} else {
+					$("#djcyl2").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb52 == true) {
+					$("#djcyl3").append('<div class="round"></div>');
+				} else {
+					$("#djcyl3").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb53 == true) {
+					$("#djcll1").append('<div class="round"></div>');
+				} else {
+					$("#djcll1").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb54 == true) {
+					$("#djcll2").append('<div class="round"></div>');
+				} else {
+					$("#djcll2").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb55 == true) {
+					$("#djcll3").append('<div class="round"></div>');
+				} else {
+					$("#djcll3").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb56 == true) {
+					$("#dygz1").append('<div class="round"></div>');
+				} else {
+					$("#dygz1").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb57 == true) {
+					$("#dygz2").append('<div class="round"></div>');
+				} else {
+					$("#dygz2").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb58 == true) {
+					$("#dygz3").append('<div class="round"></div>');
+				} else {
+					$("#dygz3").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb59 == true) {
+					$("#wdg1").append('<div class="round"></div>');
+				} else {
+					$("#wdg1").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb60 == true) {
+					$("#wdg2").append('<div class="round"></div>');
+				} else {
+					$("#wdg2").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb61 == true) {
+					$("#wdg3").append('<div class="round"></div>');
+				} else {
+					$("#wdg3").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb62 == true) {
+					$("#dyg1").append('<div class="round"></div>');
+				} else {
+					$("#dyg1").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb63 == true) {
+					$("#dyg2").append('<div class="round"></div>');
+				} else {
+					$("#dyg2").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb64 == true) {
+					$("#dyg3").append('<div class="round"></div>');
+				} else {
+					$("#dyg3").append('<div class="red"></div>');
+				}
+				;
+				if (sj.pb65 == true) {
+					$("#qs").append('<div class="round1"></div>');
+				} else {
+					$("#qs").append('<div class="red1"></div>');
+				}
+				;
+				if (sj.pb66 == true) {
+					$("#dygz").append('<div class="round1"></div>');
+				} else {
+					$("#dygz").append('<div class="red1"></div>');
+				}
+				;
+				if (sj.pb67 == true) {
+					$("#fybj").append('<div class="round1"></div>');
+				} else {
+					$("#fybj").append('<div class="red1"></div>');
+				}
+				;
+				if (sj.pb68 == true) {
+					$("#qqbj").append('<div class="round1"></div>');
+				} else {
+					$("#qqbj").append('<div class="red1"></div>');
+				}
+				;
+			});
+		}
+		function fn1(){
+			$("#d1").empty();
+			$("#d2").empty();
+			$("#d3").empty();
+			$("#d4").empty();
+			$("#yqz").empty();
+			$("#llz").empty();
+			$("#djlj1").empty();
+			$("#djlj2").empty();
+			$("#djlj3").empty();
+			$("#dysjz1").empty();
+			$("#dysjz2").empty();
+			$("#dysjz3").empty();
+			$("#djcwdz1").empty();
+			$("#djcwdz2").empty();
+			$("#djcwdz3").empty();
+			$("#yxpl1").empty();
+			$("#yxpl2").empty();
+			$("#yxpl3").empty();
+		 	$("#djcyl1").empty();
+	        $("#djcyl2").empty();
+		 	$("#djcyl3").empty();
+			$("#djcll1").empty();
+		 	$("#djcll2").empty();
+			$("#djcll3").empty();
+			$("#dygz1").empty();
+		 	$("#dygz2").empty();
+		 	$("#dygz3").empty();
+		 	$("#wdg1").empty();
+		 	$("#wdg2").empty();
+		 	$("#wdg3").empty();
+		 	$("#dyg1").empty();
+		 	$("#dyg2").empty();
+		 	$("#dyg3").empty();
+		 	$("#qs").empty();
+		 	$("#dygz").empty();
+		 	$("#fybj").empty();
+		 	$("#qqbj").empty();
+		}
+		fn1();
+		fn();
+		setInterval(fn1,10000);
+		setInterval(fn,10000);
+		
+		  //每10秒执行
+		  /*
+		  var t2 = setInterval(function() {
+		      search1();
+		  }, 10000);
+		  function search1() {
+		      showTable.fnDraw(false);
+		  };
+		  $("#sbsbm").change(function(){
+		      showTable.fnDraw();
+		  });
+		 */
+	</script>
+</body>
+</html>

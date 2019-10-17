@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>SIM信息添加</title>
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/html.css">
+<style type="text/css">
+#formwrapper {
+	width: 450px;
+	margin: 15px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px #1E7ACE solid;
+}
+
+fieldset {
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+fieldset legend {
+	color: #1E7ACE;
+	font-weight: bold;
+	padding: 3px 20px 3px 20px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+.enter {
+	text-align: center;
+}
+</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="publicRight">
+			<div>
+				<nav class="breadcrumb">
+					<a class="breadcrumb-item">基础信息</a> <a class="breadcrumb-item">SIM卡维护</a>
+					<a class="breadcrumb-item active">SIM卡新增</a>
+				</nav>
+			</div>
+			<div id="formwrapper">
+
+				<form id="formins">
+					<fieldset>
+						<legend>SIM信息添加</legend>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">SIM卡号</span>
+							</div>
+							<input type="text" name="simid" class="form-control"
+								oninput="value=value.replace(/[^\d]/g,'')" maxlength="10">
+						</div>
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">手机号码</span>
+							</div>
+							<input type="text" name="phone" class="form-control"
+								oninput="value=value.replace(/[^\d]/g,'')" maxlength="18">
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">用户状态</span>
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="0" checked="checked" />启用
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="1" />停用
+							</div>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<div class="input-group-text">
+								<input name="isuse" type="radio" value="2" />作废
+							</div>
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">终 端 I D</span>
+							</div>
+							<select id="terminalId" name="terminalid" class="form-control"
+								onchange="showNum(this)"></select>
+						</div>
+
+						<div class="input-group mb-3">
+							<div class="input-group-prepend">
+								<span class="input-group-text">设备编码</span>
+							</div>
+							<span id="devicenum" class="input-group-text form-control">终端ID对应的设备编码</span>
+						</div>
+
+
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text">备注信息</span>
+							</div>
+							<textarea class="form-control" name="note" id="note" cols="25"
+								maxlength="100" rows="3" placeholder="请输入备注信息..."></textarea>
+						</div>
+						<br />
+						<div class="enter">
+							<input class="btn btn-primary btn-sm" type="button" onclick="ins()"
+								value="保存">&nbsp;&nbsp; <input
+								class="btn btn-primary btn-sm" type="button" name="Submit"
+								onclick="javascript:history.back(-1);" value="返回">
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragment/public :: #public_footer"></div>
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../static/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		function ins(){
+			let form = $("#formins").serialize();
+			 $.ajax({
+				"url" : "/simcard/addsimlist",
+				"type" : "POST",
+				"data" : form,
+				"dataType" : "json",
+				"success" : function(data) { 
+					alert(data.status);
+					history.back();
+				},
+				"error" : function() {
+					alert("连接出错");
+					
+				}
+			});	
+		}
+	    //从数据库获取显示终端Id
+	    $.ajax({
+	        "url" : "/terminal/getTeminalIdList",
+	        "type" : "POST",
+	        "dataType" : "json",
+	        "success" : function(data) {
+	            //alert(data[0]);
+	            var terminalId = document.getElementById('terminalId');
+	            terminalId.options[0] = new Option("请选择Id","");
+	             for (i = 0; i < data.length; i++) {
+	                terminalId.options[i+1] = new Option(data[i], data[i]);
+	            }
+	        }
+	    });
+	
+	    function showNum(terminalId) {
+	        //alert(terminalId.value);
+	        if(isNaN(terminalId.value) == 1||terminalId.value==""){
+	            $("#devicenum").html("终端ID对应的设备编码"); 
+	        }else{
+	             $.ajax({
+	                    "url" : "/terminal/getTeminalNum",
+	                    "data" : {
+	                        "terminalId":terminalId.value
+	                    },
+	                    "type" : "POST",
+	                    "dataType" : "text",
+	                    "success" : function(data) {
+	                        $("#devicenum").html(data); 
+	                    }
+	
+	                });
+	        }
+	    }
+	</script>
+</body>
+</html>

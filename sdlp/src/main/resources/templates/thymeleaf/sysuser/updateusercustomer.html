@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>修改角色权限</title>
+<link rel="stylesheet" href="../../static/css/bootstrap.min.css">
+<link rel="stylesheet" href="../../../static/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../../../static/css/html.css">
+<style>
+#formwrapper {
+	width: 90%;
+	margin: 15px auto;
+	padding: 20px;
+	text-align: left;
+	border: 1px #1E7ACE solid;
+}
+
+fieldset {
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+fieldset legend {
+	color: #1E7ACE;
+	font-weight: bold;
+	padding: 3px 20px 3px 20px;
+	border: 1px solid #1E7ACE;
+	background: #fff;
+}
+
+.enter {
+	text-align: center;
+}
+
+.alert alert-warning {
+	float: right;
+}
+</style>
+</head>
+<body>
+	<div th:replace="fragment/public :: #public_header"></div>
+	<div th:replace="fragment/public :: #public_time"></div>
+	<div class="publicBody">
+		<div th:replace="fragment/public :: #public_left"></div>
+		<div class="publicRight">
+			<div>
+				<nav class="breadcrumb">
+					<a class="breadcrumb-item">基础信息</a> <a class="breadcrumb-item">用户管理</a>
+					<a class="breadcrumb-item active">用户与客户关系修改</a>
+				</nav>
+			</div>
+			<div id="formwrapper">
+				
+				<!-- 修改样式 在CSS里定义 -->
+				<form method="post" action="/role/updateRole" name="form1">
+					<fieldset>
+						<legend style="text-align: center;">修改用户与客户关系</legend>
+						<table id="right1"
+							class="table text-center table-bordered table-sm">
+
+							<tr>
+								<td><span class="input-group-text ">用户名</span></td>
+								<td><input class="form-control" id="name" name="name" readonly="readonly" /></td>
+								<td colspan="2"></td>
+							</tr>
+							<tr>
+								<td><span class="input-group-text">可匹配客户</span></td>
+								<td><span class="input-group-text">操作</span></td>
+								<td><span class="input-group-text">已有客户</span></td>
+								<td><span class="input-group-text">操作</span></td>
+							</tr>
+							<tr>
+								<td width="40%"><select class="form-control" id="select1"
+									style="width: 100%" multiple name="list1" size="12"
+									ondblclick="moveOption(document.form1.list1, document.form1.list2)">
+								</select></td>
+								<td width="20%" align="center"><input
+									class="btn btn-primary btn-sm" type="button" value="添加"
+									onclick="moveOption(document.form1.list1, document.form1.list2)" /><br /><br /><input
+									 class="btn btn-primary btn-sm"
+									type="button" value="删除"
+									onclick="moveOption(document.form1.list2, document.form1.list1)" /></td>
+								<td width="40%"><select class="form-control" id="select2"
+									style="width: 100%" multiple name="list2" size="12"
+									ondblclick="moveOption(document.form1.list2, document.form1.list1)">
+								</select></td>
+								<td><input class="btn btn-primary btn-sm" type="button"
+									value="上移" onclick="changepos(list2,-1)" /><br /><br /><input
+									class="btn btn-primary btn-sm" type="button" value="下移"
+									onclick="changepos(list2,1)" /></td>
+							</tr>
+							<tr>
+								<td colspan="4"><p class="form-control" align="center">
+										可选定多项点击添加或移除(按住shift以多选)。</p></td>
+							</tr>
+							<tr>
+								<td colspan="4"><input class="btn btn-primary btn"
+									type="button" value="提交" onclick="tijiao(document.form1.list2)" /> &nbsp;&nbsp;&nbsp;	&nbsp;
+									<input class="btn btn-primary btn" type="button" onclick="javascript:history.back(-1);" value="返回">
+								</td>
+								
+							</tr>
+						</table>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragment/public :: #public_footer"></div>
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/html.js"></script>
+	<script src="../../../static/js/jquery.dataTables.min.js"></script>
+	<script src="../../../static/js/dataTables.bootstrap4.min.js"></script>
+	<script src="../../static/js/bootstrap.bundle.min.js"></script>
+	<!-- 时间选择器函数调用，主要调配置 -->
+	<script type="text/javascript"
+		src="../../../static/js/bootstrap-datetimepicker.min.js"
+		charset="UTF-8"></script>
+	<!-- 汉化时间选择器 -->
+	<script type="text/javascript"
+		src="../../../static/js/bootstrap-datetimepicker.zh-CN.js"
+		charset="UTF-8"></script>
+	<script th:inline="javascript">
+	var id;
+	//实现权限默认选中动态下拉框 
+	$(document).ready(
+			function() {
+				id = window.location.search;
+				id = id.slice(4);;
+				$.ajax({
+					"url" : "/sysuser/selectSysuserId",
+					"type" : "get",
+					"data" : {"id" : id},
+					"async" : false,
+					"dataType" : "json",
+					"success" : function(data) {
+						str = data.name;
+						//回填数据
+						$("#name").val(str);
+					},
+					"error" : function() {
+						alert("获取角色失败");
+					}
+				});
+				//生成角色下拉框
+				$.ajax({
+					"url" : "/usercustomer/select",
+					"type" : "get",
+					"data" : {"id" : id},
+					"dataType" : "json",
+					"success" : function(data) {
+						let list1 = data.strlist1;
+						let list2 = data.strlist2;
+						for (let i = 0; i < list1.length; i++) {
+							
+							$("#select1").prepend("<option value="+list1[i]+">"+list1[i]+"</option>");
+						}
+						for (let j = 0; j < list2.length; j++) {
+							$("#select2").prepend("<option value="+list2[j]+">"+list2[j]+"</option>");
+						}
+					},
+					"error" : function() {
+						alert("角色信息出错");
+					}
+				});
+			})
+	//重置权限
+	function tijiao(e1) {
+		var list=new Array();//创建list集合
+		for ( var i = 0,l = e1.length; i < l; i++ ){
+			list[i] = e1.options[i].text;
+			}
+		var params = {
+				list:list,
+				id:id
+		};
+		if(e1.length == 0){
+			if (confirm("您确定要提交吗?")) {
+				$.ajax({
+					"url" : "/usercustomer/delete",
+					"data" : params,
+					"type" : "POST",
+					"dataType" : "text",
+					"success" : function(data) {
+						alert("修改成功");
+						history.back();
+					},
+					"error" : function(data) {
+						alert("修改失败");
+					}
+				});
+			};
+		}else{
+			// 发AJAX请求，并处理结果
+			if (confirm("您确定要提交吗?")) {
+				$.ajax({
+					"url" : "/usercustomer/update",
+					"data" : params,
+					"type" : "POST",
+					"dataType" : "text",
+					"success" : function(data) {
+						alert("修改成功");
+					},
+					"error" : function(data) {
+						alert("修改失败");
+					}
+				});
+			};
+		}
+		
+	}
+	
+	  function moveOption(e1, e2){  
+	    try{  
+	      for(var i=0;i<e1.options.length;i++){  
+	        if(e1.options[i].selected){  
+	          var e = e1.options[i];  
+	          e2.options.add(new Option(e.text, e.value));  
+	          e1.remove(i);  
+	          ii=i-1; 
+	        }  
+	      }  
+	      document.form1.city.value=getvalue(document.form1.list2);  
+	    }catch(e){ 
+	     }  
+	  }  
+	   function getvalue(geto){  
+	    var allvalue = "";  
+	    for(var i=0;i<geto.options.length;i++){  
+	      allvalue +=geto.options[i].value + ",";  
+	    }  
+	    return allvalue;  
+	  } 
+	   function changepos(obj,index)  
+	  {  
+	    if(index==-1){  
+	      if (obj.selectedIndex>0){  
+	        //obj.options(obj.selectedIndex).swapNode(obj.options(obj.selectedIndex-1)) //swapNode方法只有IE才支持 
+	        obj.insertBefore(obj.options[obj.selectedIndex], obj.options[obj.selectedIndex - 1]);
+	      }  
+	    }else if(index==1){  
+	      if (obj.selectedIndex<obj.options.length-1){  
+	        //obj.options(obj.selectedIndex).swapNode(obj.options(obj.selectedIndex+1)) //swapNode方法只有IE才支持 
+	        obj.insertBefore(obj.options[obj.selectedIndex + 1], obj.options[obj.selectedIndex]);   
+	      }  
+	    }  
+	  }  
+	</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+@charset "UTF-8";
+	/* div 通用左侧导航栏 */
+	.dvcontent {
+		overflow: auto;
+		background-color:#F5F5F5;
+		border-right:1px solid #CCCCCC;
+		width:200px;
+		position:fixed;
+		top:55px;
+		left:0px;
+		
+	}
+	/* iframe 通用 使用在左侧导航栏页面的内联框  */
+	.naviframe{
+		
+		background-color:#F5F5F5;
+		width:180px;
+		height:600px;
+	}
+	
+	/* div 通用头部 */
+	.dvheader {
+		background-color:#2468a9;
+		height: 50px;
+		position: fixed;
+		top: 0px;
+		z-index: 2;
+		left: 0px;
+		right: 0px;
+	    text-align:center;
+	}
+	/* iframe 通用 使用在头部页面的内联框  */
+	.headiframe{
+		text-align:center;
+		frameborder:0;
+		background-color:#F5F5F5;
+		width:380px;
+		height:50px;
+		scrolling:"no";
+	}
+	/* div 通用内容页 */
+	.content {
+		border-style: solid;
+		border-color:red;
+		position: absolute;
+		top: 55px;
+		left: 300px;
+		right: 20px;
+		overflow:hidden;
+		overflow-y:scroll;
+		overflow-x:scroll;
+	}
+	/* div 通用脚部 */
+    .footer {
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            width: 100%;
+            height: 45px;
+            background-color: #eee;
+            z-index: 9999;
+			text-align:center;
+        }
+        /* iframe 通用 使用在脚部页面的内联框  */
+	.footiframe{
+		text-align:center;
+		frameborder:0;
+		background-color:#F5F5F5;
+		width:600px;
+		height:44px;
+		scrolling:"no";
+	}

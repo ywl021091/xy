@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<!-- 设置响应时，做一个自适应宽度等于物理设备的宽度,缩放比例是当前不缩放 -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>登录页</title>
+<link href="../static/css/bootstrap.min.css" rel="stylesheet" />
+
+</head>
+<!-- 登录页css -->
+<style>
+	html {
+		height: 100%;
+	}
+	
+	body.signin {
+		/* 背景色 */
+		background: url('../../../static/images/ouri-bg2.jpg') ;
+	    background-size:100% ;
+	    background-repeat: no-repeat;
+		/* 定义所有颜色 */
+		/* color: rgba(255, 255, 255, .95); */
+	}
+	/* 隔层 */
+	img{
+		width:80%;
+		height:100%;
+	}
+	
+	.signinpanel {
+		width: 750px;
+		/* 
+	    margin: 20px;（上、下、左、右各20px。）
+	    margin: 20px 40px;（上、下20px；左、右40px。）
+	    margin: 20px 40px 60px;（上20px；左、右40px；下60px。）
+	    margin: 20px 40px 60px 80px;（上20px；右40px；下60px；左80px。）
+	     */
+		margin: 15% auto 0;
+	}
+	
+	.signinpanel form {
+		/* 背景色 */
+		background-color: rgba(255, 255, 255, .2);
+		/* 外边框 */
+		border: 1px solid rgba(255, 255, 255, .3);
+		/* 圆角 */
+		border-radius: 5px;
+		/* 内边距 */
+		padding: 30px;
+		
+	}
+	
+	.signup-footer {
+		text-align: center;
+	}
+	
+	.login-text{
+		text-align:center;
+	}
+	h6,h4{
+		font-weight:bold;
+	}
+	/* 响应式 */
+	/* css中@media only screen and (max-width:639px)
+	这个是响应式布局，@media媒体查询 only定某种特定类型的媒体 screen彩屏设备 and并且。
+	整体意思就是当打开网页的设备为彩屏设备并且宽度小于639px时，显示下面的样式。  */
+	@media screen and (max-width:768px) {
+		.signinpanel {
+			margin: 0 auto;
+			/* 　!important指的是优先级最高，会覆盖其他样式。 */
+			width: 420px !important;
+			padding: 20px;
+			
+		}
+		body.signin {
+			background-color: #72ccee;
+		   
+		}
+		.signinpanel {
+			width: 750px;
+			margin: 20% auto 0;
+		}
+		
+		img{
+			display: none
+		}
+		.signinpanel .signin-info {
+			display: none
+		}
+	}
+
+</style>
+<body class="signin">
+	<div class="signinpanel">
+		<div class="row">
+			<div class="col-sm-7">
+				<h1>
+					<img alt="[ 物语网络平台 ]" src="../../../static/images/shebei.png">
+				</h1>
+				<h4>
+					欢迎登录<strong>水处理(WTD)数据管理系统</strong>
+				</h4>
+				
+			</div>
+			<!-- class="col-sm-5"限制input长度 -->
+			<div class="col-sm-5">
+				<!-- 登录表单 -->
+				<form id="signupForm" action="/login" method="post" onsubmit="return submit_check()">
+					
+					<h4 class="login-text">登录</h4>
+					<div class="form-group">
+						<label>用户名：</label> <input type="text" id="usernum" class="form-control"
+							name="usernum" placeholder="用户名" onblur="usernum_unnull()" />
+					</div>
+					<div class="alert alert-warning" id="usernumAlert"
+							style="display: none">
+						<strong>提示！</strong>用户名不能为空。
+					</div>
+					<div class="form-group">
+						<label>密码：</label> <input type="password" id="password" class="form-control"
+							name="password" placeholder="密码" onblur="password_unnull()" />
+					</div>
+					
+					<div class="alert alert-warning" id="posswordAlert"
+							style="display: none">
+							<strong>提示！</strong>密码不能为空。
+					</div>
+					<div class="form-group">
+						<!-- btn btn-success（颜色） btn-block（大小） -->
+						<button id="btnSubmit" class="btn btn-primary btn-block" data-loading="正在验证登录，请稍后...">登录</button>
+					</div>
+				    <h6 class="strong-text">注意：仅限其 <a href="toSign">内部</a>&nbsp;人员使用！</h6>
+				</form>
+			</div>
+		</div>
+		<hr />
+		<div class="signup-footer">
+			<!-- &copy;版权（copyright） -->
+			&copy; 2019 版权所有,翻印必究。&nbsp;电话:0531-55711656 <br> <a href="#">中国山东省济南市历城区七里河路2-9号科技佳苑5号楼201</a>
+		</div>
+	</div>
+	
+	<!-- 全局js -->
+	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
+	<script src="../../../static/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		// 唯一非空
+		function usernum_unnull() {
+			var usernum = $("#usernum").val();
+			var length = usernum.length;
+			if (length == null || length == "" || length == undefined) {
+				$("#usernumAlert").show();
+				return "false";
+			} else {
+				$("#usernumAlert").hide();
+				return "true";
+			}
+		}
+		
+		function password_unnull(){
+			var usernum = $("#password").val();
+			var length = usernum.length;
+			if (length == null || length == "" || length == undefined) {
+				$("#posswordAlert").show();
+				return "false";
+			} else {
+				$("#posswordAlert").hide();
+				return "true";
+			}
+		}
+		function submit_check(){
+			var r = false;
+			usernum_unnull();
+			password_unnull();
+			if(usernum_unnull() == "true" && password_unnull() == "true"){
+				r = true;
+			}
+			return r;
+		}
+	</script>
+</body>
+</html>
