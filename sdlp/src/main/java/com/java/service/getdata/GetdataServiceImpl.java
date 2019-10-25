@@ -87,7 +87,10 @@ public class GetdataServiceImpl implements GetdataService {
 
     @Override
     public List<String> showSBSBM() {
-        List<String> SBSBM = getdataMapper.showSBSBM();
+    	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		HttpSession session = request.getSession();
+        List<String> SBSBM = getdataMapper.showSBSBM(session.getAttribute("name").toString());
         return SBSBM;
     }
 
