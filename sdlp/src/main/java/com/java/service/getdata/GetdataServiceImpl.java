@@ -18,7 +18,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.java.dao.GetdataMapper;
 import com.java.po.TerminalData;
 
-
 /**
  * @描述： getdata增、删、改、查操作——Service层
  * 
@@ -95,7 +94,8 @@ public class GetdataServiceImpl implements GetdataService {
     	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
 		HttpServletRequest request = attributes.getRequest();
 		HttpSession session = request.getSession();
-        List<String> SBSBM = getdataMapper.showSBSBM(session.getAttribute("name").toString());
+		String usernum = session.getAttribute("usernum").toString();
+        List<String> SBSBM = getdataMapper.showSBSBM(usernum);
         return SBSBM;
     }
 
