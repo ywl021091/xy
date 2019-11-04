@@ -19,8 +19,12 @@ public interface CustomerMapper {
 	public int insert(Customer customer);
 	@Update("update customer set customernum = #{customernum}, customername = #{customername},province = #{province}, city = #{city}, linkman = #{linkman}, sex = #{sex}, address = #{address}, category = #{category},tel = #{tel}, recorddate = #{recorddate},note = #{note},lastupdate = #{lastupdate} where customerid = #{customerid}")
 	public int updateByPrimaryKey(Customer customer);
+	//?????????
 	@SelectProvider(type=com.java.provider.CustomerProvider.class,method="queryCustomer")
 	public List<Customer> queryCustomer(Customer customer);
+	//????
+	@SelectProvider(type=com.java.provider.CustomerProvider.class,method="queryCustomerAll")
+	public List<Customer> queryCustomerAll(Customer customer);
 	@Select("select * from customer where customerid = #{customerid}")
 	public Customer selectByid(int customerid);
 	@Select("select * from customer where customernum = #{customernum}")

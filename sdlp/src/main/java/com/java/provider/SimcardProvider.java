@@ -1,7 +1,12 @@
 package com.java.provider;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /** 
 * @author 郑广润  E-mail: 489551132@qq.com
@@ -18,8 +23,8 @@ public class SimcardProvider {
      * @param terminalid
      * @return
      */
-    public String selectSimList(@Param("simid") String simid,@Param("phone")String phone,@Param("isuse")Integer isuse,@Param("terminalid")Integer terminalid) {
-        String sql = new SQL() {
+    public String selectSimList(@Param("simid") String simid,@Param("phone")String phone,@Param("isuse")Integer isuse,@Param("terminalid")Integer terminalid, @Param("usernum")String usernum) {
+    	        String sql = new SQL() {
             {
                 SELECT("simcard.simcardid,simcard.simid,simcard.phone,simcard.isuse,simcard.terminalid,simcard.note,simcard.lastupdate,terminal.devicenum");
                 FROM("simcard");
@@ -37,7 +42,9 @@ public class SimcardProvider {
 					WHERE("simcard.isuse =#{isuse}");
 				}
 				if (terminalid == null) {
+					WHERE("terminal.customerid in (SELECT customerid FROM usercustomer WHERE userid=(SELECT sysuserid FROM sysuser WHERE usernum = #{usernum}))");
 				} else {
+					WHERE("terminal.customerid in (SELECT customerid FROM usercustomer WHERE userid=(SELECT sysuserid FROM sysuser WHERE usernum = #{usernum}))");
 					WHERE("simcard.terminalid like concat('%',#{terminalid},'%')");
 				}
             }

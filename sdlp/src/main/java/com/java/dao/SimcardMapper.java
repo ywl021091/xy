@@ -28,7 +28,7 @@ public interface SimcardMapper {
      * 复杂查询
      */
     @SelectProvider(type=com.java.provider.SimcardProvider.class,method="selectSimList")
-    public List<SimcardResult> selectSimList(@Param("simid")String simid,@Param("phone")String phone,@Param("isuse")Integer isuse,@Param("terminalid")Integer terminalid);
+    public List<SimcardResult> selectSimList(@Param("simid")String simid,@Param("phone")String phone,@Param("isuse")Integer isuse,@Param("terminalid")Integer terminalid,@Param("usernum")String usernum);
     /**
      * 根据id获取用户信息 
      * @param id

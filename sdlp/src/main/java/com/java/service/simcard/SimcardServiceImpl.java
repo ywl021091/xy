@@ -5,8 +5,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -40,7 +45,12 @@ public class SimcardServiceImpl implements SimcardService{
 	@Override
 	public  Map<String, Object>  selectSimList(Integer start, Integer length,String simid,String phone,Integer isuse,Integer terminalid){
 		PageHelper.startPage(((start / length) + 1), length);
-		List<SimcardResult> simcardResults = simcardMapper.selectSimList(simid, phone, isuse, terminalid);
+		System.out.println("进入条件查询用户信息");
+		ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+		HttpServletRequest request = attributes.getRequest();
+		HttpSession session = request.getSession();
+		String usernum = session.getAttribute("usernum").toString();
+		List<SimcardResult> simcardResults = simcardMapper.selectSimList(simid, phone, isuse, terminalid,usernum);
 		// simcard表中展示终端信息表中的设备编码信息
 		PageInfo<SimcardResult> pageInfo = new PageInfo<SimcardResult>(simcardResults);
 		Map<String, Object> map = new HashMap<String, Object>();
