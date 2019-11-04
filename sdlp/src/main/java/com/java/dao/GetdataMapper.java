@@ -57,7 +57,7 @@ public interface GetdataMapper {
 	@SelectProvider(type = com.java.provider.GetDataProvider.class, method = "selectGetDataList")
 	public List<TerminalData> ifSelect(@Param("time1") String time1, @Param("time2") String time2, @Param("mac") String mac);
 
-	@Select("select devicenum from terminal WHERE customerid in (SELECT customerid FROM usercustomer WHERE userid in (SELECT sysuserid FROM sysuser WHERE usernum = #{customernum})) group by devicenum")
+	@Select("select devicenum from terminal WHERE customerid in (SELECT customerid FROM usercustomer WHERE userid=(SELECT sysuserid FROM sysuser WHERE usernum = #{customernum})) group by devicenum")
     public List<String> showSBSBM(String customernum);
 
 	@SelectProvider(type = com.java.provider.GetDataProvider.class, method = "selectGetDataListBySBSBM")

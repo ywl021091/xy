@@ -27,8 +27,8 @@ public class CityMapServiceImpl implements CityMapService{
     }
 
     @Override
-    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(String sbsbm, String province, String city) {
-        List<Terminal> longitudeAndLatitude = cityMapper.queryLongitudeAndLatitudeBySBSBM(sbsbm,province,city);
+    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(String province, String city) {
+        List<Terminal> longitudeAndLatitude = cityMapper.queryLongitudeAndLatitudeBySBSBM(province,city);
         //System.out.println("Service:"+longitudeAndLatitude);
         return longitudeAndLatitude;
     }

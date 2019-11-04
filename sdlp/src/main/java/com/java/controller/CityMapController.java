@@ -42,15 +42,14 @@ public class CityMapController {
     }
     //根据点击查询按钮按条件查询传入地址的经纬度
     
-    @PostMapping("query_longitude_latitude")
+    @PostMapping("/query_longitude_latitude")
     @ResponseBody
-    public List<Terminal> queryLongitudeAndLatitude(HttpSession session,String province,String city) {
+    public List<Terminal> queryLongitudeAndLatitude(String province,String city) {
         
-        String sbsbm = (String)session.getAttribute("sbsbm");
-        
+        //String sbsbm = (String)session.getAttribute("sbsbm");
         List<Terminal> longitudeAndLatitude;
         //根据条件查询部分地址的经纬度
-        longitudeAndLatitude = cityMapServiceImpl.queryLongitudeAndLatitudeBySBSBM(sbsbm,province,city);
+        longitudeAndLatitude = cityMapServiceImpl.queryLongitudeAndLatitudeBySBSBM(province,city);
         for(Terminal lal : longitudeAndLatitude) {
         lal.setNote(cityMapServiceImpl.queryCustomername(lal.getCustomerid()));
         }

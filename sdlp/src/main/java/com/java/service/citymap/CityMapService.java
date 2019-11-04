@@ -13,7 +13,7 @@ import com.java.po.Terminal;
 public interface CityMapService {
     public List<Terminal> queryLongitudeAndLatitude(String province, String city) ;
     
-    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(String sbsbm,String province, String city) ;
+    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(String province, String city) ;
     
     public String queryCustomername(Integer customerid);
 }

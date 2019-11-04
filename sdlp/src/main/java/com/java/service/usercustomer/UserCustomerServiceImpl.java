@@ -58,7 +58,7 @@ public class UserCustomerServiceImpl implements UserCustomerService {
 	public Map<String, Object> select(int userid) {
 		//获取所有客户列表
 		Customer customer = new Customer();
-		List<Customer> list = customerMapper.queryCustomer(customer);
+		List<Customer> list = customerMapper.queryCustomerAll(customer);
 		//获取本角色客户列表
 		List<Usercustomer> list2= usercustomerMapper.select(userid);
 		//可赋予客户

@@ -1,11 +1,15 @@
 package com.java.provider;
  
 import java.util.Date;
- 
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.jdbc.SQL;
- 
-import com.java.po.Terminal;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
  
 /** 
 * @author 郑广润  E-mail: 489551132@qq.com
@@ -15,6 +19,10 @@ import com.java.po.Terminal;
 public class TerminalProvider {
     // 终端模块的复杂查询 2019/1/30 郑广润
         public String queryTerminal(@Param("mtype")String mtype, @Param("isuse")String isuse,  @Param("owner")String owner, @Param("devicenum")String devicenum, @Param("usedate")Date usedate, @Param("terminalid") Integer terminalid, @Param("customernum") String customernum) {
+        	ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    		HttpServletRequest request = attributes.getRequest();
+    		HttpSession session = request.getSession();
+    		String usernum = session.getAttribute("usernum").toString();
             String sql = new SQL() {
                 {
                     SELECT("terminal.terminalid,terminal.mtype,terminal.isuse,terminal.owner,terminal.customerid,terminal.devicenum,terminal.customerid,customer.customernum as customernum,terminal.devicenum,terminal.note,terminal.usedate,terminal.lastupdate,terminal.longitude,terminal.latitude,terminal.province,terminal.city,terminal.mac");
@@ -48,10 +56,9 @@ public class TerminalProvider {
                     } else {
                         WHERE("usedate = #{usedate}");
                     }
- 
+                    WHERE("terminal.customerid in (SELECT customerid FROM usercustomer WHERE userid=(SELECT sysuserid FROM sysuser WHERE usernum = '"+usernum+"'))");
                 }
             }.toString();
- 
             return sql;
         }
 }

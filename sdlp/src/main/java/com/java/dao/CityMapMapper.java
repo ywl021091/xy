@@ -23,8 +23,9 @@ public interface CityMapMapper {
     
     
     
-    @Select("select devicenum,isuse,longitude,latitude,customerid from terminal where province=#{province} and city=#{city} and devicenum=#{sbsbm}")
-    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(@Param("sbsbm")String sbsbm, @Param("province")String province,@Param("city") String city);
+    //@Select("select devicenum,isuse,longitude,latitude,customerid from terminal where province=#{province} and city=#{city}")
+    @Select("select devicenum,isuse,longitude,latitude,customerid from terminal")
+    public List<Terminal> queryLongitudeAndLatitudeBySBSBM(@Param("province")String province,@Param("city") String city);
 
 
     @Select("select customername from customer where customerid=#{customerid}")

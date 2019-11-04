@@ -58,7 +58,7 @@
 	.login-text{
 		text-align:center;
 	}
-	h6,h4{
+	h6{
 		font-weight:bold;
 	}
 	/* 响应式 */
@@ -110,7 +110,7 @@
 					
 					<h4 class="login-text">登录</h4>
 					<div class="form-group">
-						<label>用户名：</label> <input type="text" id="usernum" class="form-control"
+						<label for="usernum">用户名：</label> <input type="text" id="usernum" class="form-control"
 							name="usernum" placeholder="用户名" onblur="usernum_unnull()" />
 					</div>
 					<div class="alert alert-warning" id="usernumAlert"
@@ -118,7 +118,7 @@
 						<strong>提示！</strong>用户名不能为空。
 					</div>
 					<div class="form-group">
-						<label>密码：</label> <input type="password" id="password" class="form-control"
+						<label for="password">密码：</label> <input type="password" id="password" class="form-control"
 							name="password" placeholder="密码" onblur="password_unnull()" />
 					</div>
 					

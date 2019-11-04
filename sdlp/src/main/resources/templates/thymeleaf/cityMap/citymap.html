@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8" />
 <title>地图</title>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=TptRlDEacCRniB9GLU7hjEQXckOyS56u"></script>
+<script type="text/javascript"
+	src="http://api.map.baidu.com/api?v=2.0&ak=TptRlDEacCRniB9GLU7hjEQXckOyS56u"></script>
 <!-- bootstrap的css样式，大部分使用此命名 -->
 <link rel="stylesheet" href="../../../static/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../../static/css/html.css">
@@ -26,6 +27,11 @@
 	margin: 15px auto;
 	padding: 20px;
 	border: 1px #1E7ACE solid;
+}
+
+img {
+	width: auto;
+	height: 40px;
 }
 
 fieldset {
@@ -52,13 +58,13 @@ fieldset legend {
 </head>
 <body>
 	<div th:replace="fragment/public :: #public_header"></div>
-	<div th:replace="fragment/public :: #public_time"></div>
+	<div th:replace="fragment/public :: #public_time0"></div>
 	<div class="publicBody">
 		<div th:replace="fragment/public :: #public_left"></div>
 		<div id="center">
 			<div id="container">
 				<div id="allmap" style="width: 100%; height: 95%;"></div>
-				<span id="result" th:text="${status}"></span>
+				<!-- <span id="result" th:text="${status}"></span> -->
 			</div>
 		</div>
 		<div id="right">
@@ -88,156 +94,231 @@ fieldset legend {
 	</div>
 	<div th:replace="fragment/public :: #public_footer"></div>
 	<script src="../../../static/js/jquery-3.3.1.min.js"></script>
-	<script src="../../../static/js/html.js"></script>
-<script src="../../../static/js/bootstrap.bundle.min.js"></script>
-<script src="../../../static/js/cityArray.js"></script>
-<script src="../../../static/js/cityMethod.js"></script>
-<script type="text/javascript">
-	//实例化浏览器定位对象。
-	var geolocation = new BMap.Geolocation();
-	//创建地图解析器
-	var geoc = new BMap.Geocoder();
-	// 编写自定义函数,创建标注添加坐标，和备注信息
-	function addMarker(marker, label) {
-		//给个坐标创建标注
-		//var marker = new BMap.Marker(point);
-		//map.addOverlay(marker);
-		marker.setLabel(new BMap.Label(label, {
-			offset : new BMap.Size(20, -10)
-		}));
-	}
-	var map = new BMap.Map("allmap");
-	function showMap(map) {
-		//START显示自己的位置+备注信息
-		map.enableScrollWheelZoom(true);//滚轮缩放地图
-		//创建起始坐标
-		var point = new BMap.Point(116.331398, 39.897445);
-		//将起始坐标添加到地图上
-		map.centerAndZoom(point, 9);
-		//获取当前的地理位置
-		//定位结果对象会传递给r变量
-		geolocation.getCurrentPosition(function(r) {
-			//如果检索成功，通过Geolocation类的getStatus()可以判断是否成功定位
-			if (this.getStatus() == BMAP_STATUS_SUCCESS) {
-				//获取r的经纬度
-				var pt = r.point;
-				var mk = new BMap.Marker(pt);
-				//将经纬度 pt和备注获取并赋值给rs
-				geoc.getLocation(pt, function(rs) {
-					//利用rs获取具体定位信息
-					var addComp = rs.addressComponents;
-					addMarker(mk, "浏览器定位:" + addComp.province + ", "
-							+ addComp.city);
-				});
-				//地图中心移动 
-				//map.addOverlay(mk);
-				//map.panTo(pt);
-				document.getElementById("result").innerHTML = "定位成功!";
-			} else {
-				document.getElementById("result").innerHTML = "定位失败!失败原因："
-						+ this.getStatus();
-				//失败的话输出：失败原因+状态吗
-				//alert('failed'+this.getStatus());
-			}
-			//enableHighAccuracy: true是否使用高精度
-		}, {
-			enableHighAccuracy : true
-		})
-	}
-	//END显示自己的位置+备注信息
-	showMap(map);
-	//START查询功能
-	//坐标转换完之后的回调函数
-	// 百度地图API功能
-	//点击事件
-	function theLocation() {
-		$('#allmap').remove();
-		$('#container').append('<div id="allmap" style="width: 100%; height: 95%;"></div>');
+	<script src="../../../static/js/html2.js"></script> 
+	<script src="../../../static/js/bootstrap.bundle.min.js"></script>
+	<script src="../../../static/js/cityArray.js"></script>
+	<script src="../../../static/js/cityMethod.js"></script>
+	<script type="text/javascript">
 		var map = new BMap.Map("allmap");
-		document.getElementById("result").innerHTML = "正在获取位置信息....";
-		showMap(map);
-		var province = document.getElementById("province").value;
-
+		map.enableScrollWheelZoom(true);//滚轮缩放地图
+		//创建起始坐标（根据点创建地图或是根据城市地区的中文名称）
+		var point = new BMap.Point(116.331398, 39.897445);
+		//GPS转换器（也可转换其他定位类型）
 		var convertor = new BMap.Convertor();
-		//获取输入的城市信息
-		var city = document.getElementById("city").value;
-		//alert(city);
-		if (province != "" && city != "") {
-			//添加到地图上
-			map.centerAndZoom(province + city, 12);// 用城市名设置地图中心点
-		}
-		//isAddressEmpty(province, city);
-		$
-				.ajax({
-					"url" : "query_longitude_latitude",
-					"data" : $("#address_form").serialize(),
-					"type" : "post",
-					"dataType" : "json",
-					"success" : function(datas) {
-						var adds = new Array();
-						for (var i = 0; i < datas.length; i++) {
-							adds[i] = new BMap.Point(datas[i].longitude,
-									datas[i].latitude);
-							 
-							//经纬度定位
-							//var mk = new BMap.Marker(adds[i]);
-							/* var a;
-							if (datas[i].isuse == 0) {
-								a = "启用";
-							} else {
-								a = "停用";
-							} */
-							//经纬度定位
-							//bdGEO(adds[i], map, mk,data[i].num,a);
+		//将起始坐标添加到地图上（point是点，9是地图的缩放级别）
+		map.centerAndZoom(point, 5);
+		//label一直显示在marker上方
+		 function addOverlay(newPoints,datas){
+			  
+			var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(50,50));
+			var marker1 = new BMap.Marker(newPoints,{icon:myIcon});  // 创建标注
+			var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(50,50));
+			var marker2 = new BMap.Marker(newPoints,{icon:myIcon2});  // 创建标注
+			if(datas.isuse == "启用"){
+				map.addOverlay(marker1)
+			}else{
+				map.addOverlay(marker2)
+			}             
+			//console.log(datas);
+			var label = new BMap.Label(
+					datas.note+'&nbsp;&nbsp;'+ datas.devicenum+'&nbsp;&nbsp;' + datas.isuse,
+					{offset:new BMap.Size(20,-10)}
+					);
+				  label.setStyle({
+						 fontSize : "12px",
+						 height : "20px",
+						 lineHeight : "20px",
+						 fontFamily:"微软雅黑"
+					 });
+				  if(datas.isuse == "启用"){
+					  marker1.setLabel(label)
+				  }else{
+					  marker2.setLabel(label)
+				  }
+		 }
+		//添加不带文字标签的marker
+		/*  function setCenter(newPoints){
+			 map.setCenter(newPoints);
+		 } */
+		//鼠标放到marker时，显示label
+		  function addOverlay1(newPoints,datas){
+			 var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(50,50));
+			 var marker1 = new BMap.Marker(newPoints,{icon:myIcon});  // 创建标注
+			  var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(50,50));
+			  var marker2 = new BMap.Marker(newPoints,{icon:myIcon2});  // 创建标注
+			  if(datas.isuse == "启用"){
+					map.addOverlay(marker1)
+				}else{
+					map.addOverlay(marker2)
+				}
+			  marker1.addEventListener("mouseover",attribute); 
+			  marker2.addEventListener("mouseover",attribute); 
+			  function attribute(e){
+				  //alert(123);
+					var p = e.target;
+					console.log(p.getPosition());
+					var marker = new BMap.Marker(p.getPosition());  // 创建标注
+					//map.addOverlay(marker)  // 将label添加到地图中
+					var label = new BMap.Label(
+							datas.note+'&nbsp;&nbsp;'+ datas.devicenum+'&nbsp;&nbsp;' + datas.isuse,
+							{offset:new BMap.Size(20,-10)}
+							);
+						marker1.addEventListener("mouseover",function(){
+						  label.setStyle({
+								 fontSize : "12px",
+								 height : "20px",
+								 lineHeight : "20px",
+								 fontFamily:"微软雅黑",
+								 display:"block"
+							 });
+						});
+					marker2.addEventListener("mouseover",function(){
+						  label.setStyle({
+								 fontSize : "12px",
+								 height : "20px",
+								 lineHeight : "20px",
+								 fontFamily:"微软雅黑",
+								 display:"block"
+							 });
+						});
+						  marker1.setLabel(label)
+						  marker2.setLabel(label)
+						marker1.addEventListener("mouseout",function(){
+							label.setStyle({display:"none"})
+						});
+						  marker2.addEventListener("mouseout",function(){
+								label.setStyle({display:"none"})
+							});
+					}
+		 }
+		//将返回的经纬度封装到函数中
+		function overmarker(datas){
+			var adds = new Array();
+			 for (var i = 0; i < datas.length; i++) {
+				adds[i] = new BMap.Point(datas[i].longitude,datas[i].latitude);
+			}
+			 var points=adds;
+			 var newPoints=new Array();;
+			//坐标转换的回调函数
+			var pointsLength=points.length;//转换前点集的长度
+			  var tenLength=parseInt(pointsLength/10);//判断长度是10的几倍
+			  //console.log("长度是10的"+tenLength+"倍")
+			  var tenMod=pointsLength%10;//对10取余数，如果大于零证明存在不是10的整数倍
+			  //console.log("对points去取余数"+tenMod)
+			  if (tenMod>0){
+			    tenLength=tenLength+1;
+			  }
+			  //console.log("当余数大于0时，points的长度加1是"+tenLength);
+			  var ssi=0;//标识符，与tenLength进行比较判断是否调用zhuanhuan()方法
+			translateCallback = function (data){
+				  //alert(data);
+			      if(data.status === 0) {
+			        for (var i = 0; i < data.points.length; i++) {
+				      newPoints=newPoints.concat(data.points[i]);//将转换后的新坐标，添加到新的数组中。
+				      //console.log("data.points[i]="+data.points[i]);
+				        }
+				    ssi++;//标识符自增
+				    if(ssi<tenLength){//因为每次只能转10个点，判断数组中是否还存在多余的点，取代for循环，在回调中执行转换函数，保证前一次的坐标都添加到新数组中。
+				    	zhuanhuan(ssi,translateCallback);
+				    }
+				    if(newPoints.length===points.length){//当转后和转前的坐标数组长度一致时，证明已经转完，进行画点操作
+				    	huaPoint1(newPoints,datas);
+						//鼠标滚动时获得地图的缩放级别
+						function scrollFunc(event){
+							event=event || window.event;
+						    //获取缩放比例
+						         t1=map.getZoom(); 
+						         console.log(t1);
+						         //当地图缩放等级大于等于12时，label会显示在文字的右上方
+						    if(t1>=11){
+						    	map.clearOverlays();
+						    	huaPoint(newPoints,datas);
+						    }else{//否则，鼠标放在marker上显示label
+						    	 map.clearOverlays(); 
+						    	 huaPoint1(newPoints,datas);
+						    }
+				         }
+						 /*注册事件*/
+						 if(document.addEventListener){
+						     document.addEventListener('DOMMouseScroll',scrollFunc,false);
+						 }//W3C
+						 window.onmousewheel=document.onmousewheel=scrollFunc;//IE/Opera/Chrome
+				    }
+			      }
+			    }
+			    zhuanhuan(ssi,translateCallback);
+			    //鼠标放到marker上显示label的函数
+			   function huaPoint(newPoints,datas){
+				    for (var i = 0; i < newPoints.length; i++) {
+				    	addOverlay(newPoints[i],datas[i])
 						}
-						//GPS定位
-						translateCallback = function(data) {
-							if (data.status === 0) {
-								for (var i = 0; i < data.points.length; i++) {
-									var marker = new BMap.Marker(data.points[i]);
-									bdGEO(data.points[i], map, marker,
-											datas[i].devicenum,datas[i].note, datas[i].isuse);
-
-									map.addOverlay(marker);
-								}
-							}
+				    }
+			  //label显示在marker的右上方
+			   function huaPoint1(newPoints,datas){
+				    for (var i = 0; i < newPoints.length; i++) {
+				    	addOverlay1(newPoints[i],datas[i])
 						}
-						convertor.translate(adds, 1, 5, translateCallback);
+				    }
+			  //转坐标的函数
+			  function zhuanhuan(ssi,translateCallback){
+			    if(pointsLength==0){//如果数组的长度是0，直接返回，即转换数组是空的。
+			      return;
+			    }
+			    //console.log(ssi);
+			    var convertor = new BMap.Convertor();
+			    var start=parseInt(10*ssi);
+			    var end=parseInt(start+10);
+			    //console.log("pointsLength是"+pointsLength)
+			    if(end>=pointsLength){//如果结束标识长度，大于整个数组长度时，将结束的长度赋值为数组的长度+1，保证每个值都能被去到。
+			      end=parseInt(pointsLength+1);
+			    }
+			    var arrys=points.slice(start, end);//取出原数组中即将被转化的点
+			    //alert(arrys[0]);
+			    convertor.translate(arrys, 1, 5, translateCallback);//调用转换函数，并且调用translateCallback回调函数
+			  }
+		 }
+		//发送Ajax获得设备的经纬度
+		var a=$.ajax({
+				"url" : "query_longitude_latitude",
+				//"data" :"",
+				"type" : "post",
+				"dataType" : "json",
+				"success" : function(datas) {
+					overmarker(datas);
+					return datas;
 					}
 				});
-	}
-	//添加备注信息
-	function bdGEO(point, map, mk, num,customername, isuse) {
-		//获取每一个经纬度
-		var pt = point;
-		//将经纬度 pt和备注获取并赋值给rs
-		geoc.getLocation(pt, function(rs) {
-			//利用rs获取具体定位信息
-			var addComp = rs.addressComponents;
-			//addMarker(mk, addComp.province + ", " + addComp.city + ", "
-			//		+ addComp.district + ", " + addComp.street + ", "
-			//		+ addComp.streetNumber + '<br/>' + "设备编号:" + num + '<br/>'
-			//		+ "启用状态:" + isuse);
-			/* if(){
-				
-			}else{
-				
-			} */
-			if(isuse == "启用"){
-				addMarker(mk,'<span style="color:#F00">'+customername+'<br/>'+"设备编号:" + num +'&nbsp;&nbsp;'+"状态:" + isuse+'</span>');
-			}else{
-				addMarker(mk,'<span>'+customername+'<br/>'+"设备编号:" + num +'&nbsp;&nbsp;'+"状态:" + isuse+'</span>');
+		//console.log(a);
+		//alert();
+		//查询移动地图到某个城市
+		var datas=[];
+		function theLocation(datas) {
+			var province = document.getElementById("province").value;
+			//获取输入的城市信息
+			var city = document.getElementById("city").value;
+			//alert(city);
+			if (province != "" && city != "") {
+				// 创建地址解析器实例     
+				var myGeo = new BMap.Geocoder();      
+				// 将地址解析结果显示在地图上，并调整地图视野    
+				myGeo.getPoint(city, function(point){      
+				    if (point) {      
+				        map.centerAndZoom(point, 10); 
+				    }      
+				 }, 
+				 province);
 			}
-			
-			//alert(isuse);'<span style="color:#F00">'+customername+'<br/>'+"设备编号:" + num +'&nbsp;&nbsp;'+"状态:" + isuse+'</span>'
-			         //addMarker(mk,customername+'<br/>'+"设备编号:" + num +'&nbsp;&nbsp;'+"状态:" + isuse);
-			map.addOverlay(mk);
-		});
-	}
-	//解析位置
-	    $("#sbsbm").change(function(){
-	    	theLocation();
-    });
+		}
+	
+		
+		
+		
+		
+		
+		 
+		 
+	
+	
 </script>
 </body>
 </html>
