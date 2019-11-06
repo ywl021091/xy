@@ -109,7 +109,6 @@ fieldset legend {
 		map.centerAndZoom(point, 5);
 		//label一直显示在marker上方
 		 function addOverlay(newPoints,datas){
-			  
 			var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(50,50));
 			var marker1 = new BMap.Marker(newPoints,{icon:myIcon});  // 创建标注
 			var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(50,50));
@@ -227,10 +226,10 @@ fieldset legend {
 						function scrollFunc(event){
 							event=event || window.event;
 						    //获取缩放比例
-						         t1=map.getZoom(); 
-						         console.log(t1);
-						         //当地图缩放等级大于等于12时，label会显示在文字的右上方
-						    if(t1>=11){
+						        t1=map.getZoom(); 
+						        console.log(t1);
+						        //当地图缩放等级大于等于12时，label会显示在文字的右上方
+						    if(t1>16){
 						    	map.clearOverlays();
 						    	huaPoint(newPoints,datas);
 						    }else{//否则，鼠标放在marker上显示label
@@ -309,16 +308,6 @@ fieldset legend {
 				 province);
 			}
 		}
-	
-		
-		
-		
-		
-		
-		 
-		 
-	
-	
 </script>
 </body>
 </html>
