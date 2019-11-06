@@ -31,7 +31,7 @@
 
 img {
 	width: auto;
-	height: 40px;
+	height: 25px;
 }
 
 fieldset {
@@ -109,9 +109,9 @@ fieldset legend {
 		map.centerAndZoom(point, 5);
 		//label一直显示在marker上方
 		 function addOverlay(newPoints,datas){
-			var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(50,50));
+			var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(20,25));
 			var marker1 = new BMap.Marker(newPoints,{icon:myIcon});  // 创建标注
-			var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(50,50));
+			var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(20,25));
 			var marker2 = new BMap.Marker(newPoints,{icon:myIcon2});  // 创建标注
 			if(datas.isuse == "启用"){
 				map.addOverlay(marker1)
@@ -141,9 +141,9 @@ fieldset legend {
 		 } */
 		//鼠标放到marker时，显示label
 		  function addOverlay1(newPoints,datas){
-			 var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(50,50));
+			 var myIcon = new BMap.Icon("../../../static/images/icon1.png", new BMap.Size(20,25));
 			 var marker1 = new BMap.Marker(newPoints,{icon:myIcon});  // 创建标注
-			  var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(50,50));
+			  var myIcon2 = new BMap.Icon("../../../static/images/icon.png", new BMap.Size(20,25));
 			  var marker2 = new BMap.Marker(newPoints,{icon:myIcon2});  // 创建标注
 			  if(datas.isuse == "启用"){
 					map.addOverlay(marker1)
